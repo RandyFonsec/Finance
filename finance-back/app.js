@@ -1,7 +1,8 @@
 // app.js
 const express = require('express');
 const cors = require('cors');
-const dbConnection = require('./dbConfig');
+//const dbConnection = require('./');
+const routes = require('./src/routes/apiRoute.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,7 +10,9 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/users', (req, res) => {
+routes(app);
+
+/*app.get('/users', (req, res) => {
   const query = 'SELECT * FROM user';
   dbConnection.query(query, (err, results) => {
     if (err) {
@@ -32,7 +35,7 @@ app.get('/correo/:correo', (req, res) => {
       res.json(results[0])
     }
   });
-});
+});*/
 
 
 app.listen(port, () => {
