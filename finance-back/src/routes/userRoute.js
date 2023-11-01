@@ -4,10 +4,7 @@ const {getUsuarios, getCorreo} = require('../controllers/userController.js');
 
 const router = Router();
 
-
-// Registration route
-
-// Login route
+// users route
 router.get('/users', getUsuarios);
 router.get('/correo/:correo', getCorreo)
 
