@@ -1,11 +1,12 @@
 const Router = require('express');;
-const {getUsuarios, getCorreo} = require('../controllers/userController.js');
+const {verificarLogin,registrarUsuario,actualizarUsuario} = require('../controllers/userController.js');
 
 
 const router = Router();
 
 // users route
-router.get('/users', getUsuarios);
-router.get('/correo/:correo', getCorreo)
+router.post('/login', verificarLogin);
+router.put('/registrar', registrarUsuario);
+router.post('/actualizar', actualizarUsuario);
 
 module.exports = router;
