@@ -6,6 +6,10 @@ const route = (app) => {
 
     app.use('/user', routes.user);
 
+    app.use('/gastos', routes.gastos);
+
+    app.use('/ingresos', routes.ingresos);
+
     //Routes for basic requests
 
     app.get('/', (req, res) => {

@@ -6,7 +6,9 @@ const router = Router();
 
 // users route
 router.post('/login', verificarLogin);
+
 router.put('/registrar', registrarUsuario);
+
 router.post('/actualizar', actualizarUsuario);
 
 module.exports = router;
