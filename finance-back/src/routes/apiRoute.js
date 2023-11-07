@@ -10,6 +10,8 @@ const route = (app) => {
 
     app.use('/ingresos', routes.ingresos);
 
+    app.use('/negocio', routes.negocio);
+
     //Routes for basic requests
 
     app.get('/', (req, res) => {

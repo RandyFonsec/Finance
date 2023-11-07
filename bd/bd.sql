@@ -95,6 +95,6 @@ INSERT INTO Negocio (id_usuario, nombre)
 VALUES (1, 'Mi Negocio S.A.');
 
 INSERT INTO Impuesto (id_negocio, nombre, tasa)
-VALUES (1, 'Impuesto sobre la renta', 15.50),
-       (1, 'Impuesto de ventas', 7.00);
+VALUES (1, 'Impuesto sobre la renta', 0.13),
+       (1, 'Impuesto de ventas', 0.07);
 
