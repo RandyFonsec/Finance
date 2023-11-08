@@ -1,0 +1,121 @@
+/*------------------------------------------------------------------------------*/
+/*Barra lateral*/
+.nav{
+  background-color: #023887;
+  height: 100%;
+  width: 10%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0.5%;
+  text-align: center;
+  justify-content: center;
+}
+
+/*ICONOS*/
+.circularDiv{
+  width: 75%;
+  height: 75%;
+  background-color: white; 
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  transition: background-color 0.3s, transform 0.3s, border 0.3s, box-shadow 0.3s; 
+  border: 2px solid black; 
+}
+
+.circularDiv:hover {
+  background-color: lightslategrey; 
+}
+
+.circularDiv:active {
+  transform: scale(0.95); 
+  border: 3px solid black;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.icon {
+  fill: black;
+  height: 100%;
+  width: 100%;
+}
+
+
+/*------------------------------------------------------------------------------*/
+/*Custom Card.js*/
+.card {
+  marginTop:0px;
+  border: 10px; 
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+
+/*------------------------------------------------------------------------------*/
+/*Login.js*/
+.formArea{
+  width:50%;
+  height:70%;
+  margin-right: 5%;
+  margin-left: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.imageArea{
+  width:30%;
+  height:70%;
+  margin-right: 5%;
+}
+
+.customImg {
+  width: 150%;
+  height: auto;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+
+
+/*Registro.js*/
+.registerContainer{
+  flex:12;
+  width:80%;
+  height:100%;
+  margin-right: 5%;
+  margin-left: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/*------------------------------------------------------------------------------*/
+/*Responsive*/
+
+@media (max-width: 768px) {
+    
+    .nav{
+      width:0%;
+      display: none;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .nav{
+      width:0%;
+      display: none;
+    }
+
+
+}
