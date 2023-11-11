@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useAuth } from '../AuthContext';
+
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,6 +9,9 @@ import CustomCard from '../Components/CustomCard.js'
 import styles from './pageStyles.module.css'
 
 function Perfil() {
+  //Obtiene el usuario de la sesión
+  const { user } = useAuth();
+
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
@@ -23,11 +28,10 @@ function Perfil() {
   return (
     
     <>
-
     <div className={styles.page}>
 
-    <CustomCard title = "Mi Perfil:">
-
+    <CustomCard title = "">
+      <h3 className="mb-5">Bienvenido, {user.nombre} </h3>
       <div className = {styles.perfilContainer}>
         <h5>Edición de usuario:</h5>
         <Form>

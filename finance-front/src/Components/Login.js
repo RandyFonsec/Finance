@@ -33,7 +33,7 @@ function Login() {
       try {
         const user = await controlador.getUser(username, password);
         if (user.length !== 0) {
-          login(user);
+          login(user[0]);
         } else {
           setError(true);
         }
