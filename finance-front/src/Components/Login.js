@@ -5,35 +5,63 @@ import { Link } from 'react-router-dom';
 
 
 import CustomCard from './CustomCard.js'
+import Alerta from './Alerta.js'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 
 import styles from './componentStyles.module.css'
+
+import controlador from '../Controller/controlador.js'
 
 function Login() {
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [smShow, setSmShow] = useState(true); 
+  const [error, setError] = useState(false);
 
-  const handleLogin = () => {
-
-    if(username === 'admin' && password === 'admin'){
-      const usuario = {
-          username : username,
-          password : password,
-          email : 'email@email.com'
+   const handleLogin = async () => {
+    setError(false);
+    if (username === 'admin' && password === 'admin') {
+      const user = {
+        username: username,
+        password: password,
+        email: 'email@email.com',
+      };
+      login(user);
+    } else {
+      try {
+        const user = await controlador.getUser(username, password);
+        if (user.length !== 0) {
+          login(user[0]);
+        } else {
+          setError(true);
+        }
+      } catch (error) {
+        console.error('Error en la función handleLogin:', error);
       }
-      login(usuario);
-    }
-    else{
-      alert("Credenciales incorrectas");
     }
   };
 
   return (
+
     <>
+      {error && (
+        <Alerta 
+        title = "Error" 
+        msg = "Usuario no encontrado" 
+        show={smShow} 
+        onHide={() => {setSmShow(false); setError(false)}} />
+      )}
+
+
       <div className={styles.formArea}>
+
+
+
+       
+      
+
         <CustomCard>
             <div style = {{display : 'flex', flexDirection : 'column', justifyContent : 'center'}}>
               <h3 className="mb-3">Iniciar sesión</h3>

@@ -1,11 +1,10 @@
 // daoUsers.js
 
-//Se encarga de llamar a la api
+//Se encarga de llamar a la api de esta direccion
 const BASE = process.env.REACT_APP_BASE_URL;
 
 const daoUsers = {
   getUsers: async () => {
-    // Construye la URL con los parámetros adecuados para la API en tu servidor
     const url = BASE+`/users`;
     try {
       const response = await fetch(url);
@@ -13,7 +12,7 @@ const daoUsers = {
         throw new Error('La solicitud no fue exitosa');
       }
 
-      return response.json(); // Parsea la respuesta JSON y la retorna
+      return response.json();
     } catch (error) {
       console.error('Error en la función getCorreo:', error);
       throw error;
@@ -25,7 +24,6 @@ const daoUsers = {
       return { response: [] };
     }
 
-    // Construye la URL con los parámetros adecuados para la API en tu servidor
     const url = BASE+`/correo/${correo}`;
 
     try {
@@ -34,12 +32,40 @@ const daoUsers = {
         throw new Error('La solicitud no fue exitosa');
       }
 
-      return response.json(); // Parsea la respuesta JSON y la retorna
+      return response.json();
     } catch (error) {
       console.error('Error en la función getCorreo:', error);
       throw error;
     }
   },
+
+  getUser: async (correo, contrasenna) => {
+  if (!correo || !contrasenna) {
+    return { response: [] };
+  }
+  const url = BASE + '/user/login'; 
+  const data = {
+    correo,
+    contrasenna,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if(response)
+      return response.json();
+
+  } catch (error) {
+    console.error('Error en la función getUser:', error);
+    throw error;
+  }
+},
+
 };
 
 module.exports = daoUsers;

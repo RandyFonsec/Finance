@@ -6,7 +6,7 @@ import styles from './componentStyles.module.css'
 function CustomCard({ title, children }) {
   return (
     <div className={styles.card}>
-      <Card>
+      <Card className = "my-4">
         <Card.Body className="px-5 py-5">
           <Card.Title className="">{title}</Card.Title>
           <div>  

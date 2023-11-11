@@ -11,7 +11,7 @@ END //
 
 DELIMITER ;
 
---CALL sp_VerificarUsuario(@correoUsuario, @contrasennaUsuario);
+--CALL sp_VerificarUsuario('juan@example.com', 'miContrasenna123');
 
 DELIMITER //
 

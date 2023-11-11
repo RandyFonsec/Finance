@@ -12,6 +12,10 @@ const controlador = {
     const response = await daoUsers.getCorreo(correo);
     return response;
   },
+  getUser: async (correo,contrasenna) => {
+    const response = await daoUsers.getUser(correo,contrasenna);
+    return response;
+  },
 };
 
 module.exports = controlador;

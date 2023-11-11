@@ -19,12 +19,16 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  const getUser = () => {
+    return user;
+  };
+
   const isAuthenticated = () => {
     return user !== null;
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated, getUser}}>
       {children}
     </AuthContext.Provider>
   );
