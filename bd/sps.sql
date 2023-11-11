@@ -298,6 +298,9 @@ DELIMITER ;
 
 ----------------------------------------NEGOCIO-----------------------------------------------------
 
+
+
+
 DELIMITER //
 CREATE PROCEDURE sp_getNegocio(IN usuarioID INT)
 BEGIN
@@ -567,3 +570,207 @@ END;
 DELIMITER ;
 
 
+
+----------------------------------------REPORTES-----------------------------------------------------
+
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_primerReporteIngresos;
+CREATE PROCEDURE sp_primerReporteIngresos(
+    IN idUsuario INT,
+    IN es_negocio INT,
+    IN fechaInicio DATE,
+    IN fechaFin DATE
+)
+BEGIN
+    DECLARE currentDate DATE;
+    DECLARE totalMonto DECIMAL(10, 2) DEFAULT 0;
+    DECLARE done INT DEFAULT 0;
+
+    CREATE TEMPORARY TABLE TempResultados (
+        Mes INT,
+        Anio INT,
+        MontoTotal DECIMAL(10, 2)
+    );
+
+    SET currentDate = fechaInicio;
+
+    REPEAT
+        SET @mes = MONTH(currentDate);
+        SET @anio = YEAR(currentDate);
+
+        SELECT SUM(monto) INTO totalMonto
+        FROM Ingreso
+        WHERE id_usuario = idUsuario
+        AND es_comercio = es_negocio
+        AND MONTH(fecha) = MONTH(currentDate);
+
+        INSERT INTO TempResultados (Mes, Anio, MontoTotal)
+        VALUES (@mes, @anio, COALESCE(totalMonto, 0));
+
+        SET currentDate = DATE_ADD(currentDate, INTERVAL 1 MONTH);
+
+        IF MONTH(currentDate) > MONTH(fechaFin) THEN
+            SET done = 1;
+        END IF;
+
+    UNTIL done = 1 END REPEAT;
+
+    SELECT * FROM TempResultados;
+
+    DROP TEMPORARY TABLE IF EXISTS TempResultados;
+END //
+
+DELIMITER ;
+
+--CALL sp_primerReporteIngresos(1,0, '2023-01-02','2023-11-05');
+
+
+DELIMITER //
+CREATE PROCEDURE sp_segundoReporteIngresos(
+    IN p_idUsuario INT,
+    IN p_es_comercio INT,
+    IN p_fecha DATE
+)
+BEGIN
+    DECLARE currentDay DATE;
+    DECLARE totalMonto DECIMAL(10, 2) DEFAULT 0;
+    DECLARE done INT DEFAULT 0;
+
+    CREATE TEMPORARY TABLE TempResultados (
+        Dia INT,
+        MontoTotal DECIMAL(10, 2)
+    );
+
+    SET currentDay = DATE_FORMAT(p_fecha, '%Y-%m-01');
+
+    REPEAT
+        SET @dia = DAY(currentDay);
+
+        SELECT SUM(monto) INTO totalMonto
+        FROM Ingreso
+        WHERE id_usuario = p_idUsuario
+        AND es_comercio = p_es_comercio
+        AND fecha = currentDay;
+
+        INSERT INTO TempResultados (Dia, MontoTotal)
+        VALUES (@dia, COALESCE(totalMonto, 0));
+
+        SET currentDay = DATE_ADD(currentDay, INTERVAL 1 DAY);
+
+        IF MONTH(currentDay) != MONTH(p_fecha) THEN
+            SET done = 1;
+        END IF;
+
+    UNTIL done = 1 END REPEAT;
+
+    SELECT * FROM TempResultados;
+
+    DROP TEMPORARY TABLE IF EXISTS TempResultados;
+END //
+
+DELIMITER ;
+
+--CALL sp_segundoReporteIngresos(1,0, '2023-11-25');
+
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS sp_primerReporteGastos;
+CREATE PROCEDURE sp_primerReporteGastos(
+    IN idUsuario INT,
+    IN es_negocio INT,
+    IN fechaInicio DATE,
+    IN fechaFin DATE
+)
+BEGIN
+    DECLARE currentDate DATE;
+    DECLARE totalMonto DECIMAL(10, 2) DEFAULT 0;
+    DECLARE done INT DEFAULT 0;
+
+    CREATE TEMPORARY TABLE TempResultados (
+        Mes INT,
+        Anio INT,
+        MontoTotal DECIMAL(10, 2)
+    );
+
+    SET currentDate = fechaInicio;
+
+    REPEAT
+        SET @mes = MONTH(currentDate);
+        SET @anio = YEAR(currentDate);
+
+        SELECT SUM(monto) INTO totalMonto
+        FROM Gasto
+        WHERE id_usuario = idUsuario
+        AND es_comercio = es_negocio
+        AND MONTH(fecha) = MONTH(currentDate);
+
+        INSERT INTO TempResultados (Mes, Anio, MontoTotal)
+        VALUES (@mes, @anio, COALESCE(totalMonto, 0));
+
+        SET currentDate = DATE_ADD(currentDate, INTERVAL 1 MONTH);
+
+        IF MONTH(currentDate) > MONTH(fechaFin) THEN
+            SET done = 1;
+        END IF;
+
+    UNTIL done = 1 END REPEAT;
+
+    SELECT * FROM TempResultados;
+
+    DROP TEMPORARY TABLE IF EXISTS TempResultados;
+END //
+
+DELIMITER ;
+
+--CALL sp_primerReporteGastos(1,0, '2023-01-02','2023-11-05');
+
+
+DELIMITER //
+CREATE PROCEDURE sp_segundoReporteGastos(
+    IN p_idUsuario INT,
+    IN p_es_comercio INT,
+    IN p_fecha DATE
+)
+BEGIN
+    DECLARE currentDay DATE;
+    DECLARE totalMonto DECIMAL(10, 2) DEFAULT 0;
+    DECLARE done INT DEFAULT 0;
+
+    CREATE TEMPORARY TABLE TempResultados (
+        Dia INT,
+        MontoTotal DECIMAL(10, 2)
+    );
+
+    SET currentDay = DATE_FORMAT(p_fecha, '%Y-%m-01');
+
+    REPEAT
+        SET @dia = DAY(currentDay);
+
+        SELECT SUM(monto) INTO totalMonto
+        FROM Gasto
+        WHERE id_usuario = p_idUsuario
+        AND es_comercio = p_es_comercio
+        AND fecha = currentDay;
+
+        INSERT INTO TempResultados (Dia, MontoTotal)
+        VALUES (@dia, COALESCE(totalMonto, 0));
+
+        SET currentDay = DATE_ADD(currentDay, INTERVAL 1 DAY);
+
+        IF MONTH(currentDay) != MONTH(p_fecha) THEN
+            SET done = 1;
+        END IF;
+
+    UNTIL done = 1 END REPEAT;
+
+    SELECT * FROM TempResultados;
+
+    DROP TEMPORARY TABLE IF EXISTS TempResultados;
+END //
+
+DELIMITER ;
+
+--CALL sp_segundoReporteGastos(1,0, '2023-11-25');
