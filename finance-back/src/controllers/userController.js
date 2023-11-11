@@ -6,7 +6,7 @@ const verificarLogin = async (req, res) => {
 const correo = req.body.correo;
 const contrasenna = req.body.contrasenna;
 const query = `CALL sp_VerificarUsuario('${correo}','${contrasenna}')`;
-
+console.log(query);
 dbConnection.query(query, (err, results) => {
     if (err) {
     res.status(500).send('Error al llamar al proceso almacenado');

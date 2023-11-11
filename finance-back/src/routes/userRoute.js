@@ -1,10 +1,11 @@
-const Router = require('express');;
+const Router = require('express');
 const {verificarLogin,registrarUsuario,actualizarUsuario} = require('../controllers/userController.js');
 
 
 const router = Router();
 
-// users route
+
+// /users route
 router.post('/login', verificarLogin);
 
 router.put('/registrar', registrarUsuario);
