@@ -5,6 +5,7 @@ import { useAuth } from '../AuthContext';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import CustomCard from '../Components/CustomCard.js'
+import controlador from '../Controller/controlador.js'
 
 import styles from './pageStyles.module.css'
 
@@ -12,15 +13,25 @@ function Perfil() {
   //Obtiene el usuario de la sesión
   const { user } = useAuth();
 
-  const [nombre, setNombre] = useState('');
+  const [nombre, setNombre] = useState(user.nombre);
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
 
 
-  const handleUpdate = () => {
-    //Hacer algo con los datos
-    alert(pass2);
+  const handleUpdate = async() => {
+    //Hacer algo con los datos updateUser: async (id,nombre,correo,contrasenna)
+    try {
+      const response = await controlador.updateUser(user.id,nombre,email, pass2);
+      
+      if (response.status == 200) {
+        alert("ACTUALIZADO");
+      } else if (response.status == 204) {
+        alert(response.statusText);
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleUpdate:', error);
+    }
 
   }
 
@@ -39,14 +50,14 @@ function Perfil() {
           <Form.Group className="mb-3" controlId="1">
             <Form.Label>Nombre</Form.Label>
             <Form.Control 
-            value={nombre}
+            value={user.nombre}
             onChange={(e) => setNombre(e.target.value)}
             type="text" 
-            placeholder="Manuel Núñez" />
+            placeholder="Nombre" />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="2">
-            <Form.Label>Nombre</Form.Label>
+            <Form.Label>Correo</Form.Label>
             <Form.Control 
             value={email}
             onChange={(e) => setEmail(e.target.value)}

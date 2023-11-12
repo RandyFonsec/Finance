@@ -66,6 +66,59 @@ const daoUsers = {
   }
 },
 
+updateUser: async (id,nombre,correo, contrasenna) => {
+  
+  const url = BASE + '/user/actualizar'; 
+  const data = {
+    id,
+    nombre,
+    correo,
+    contrasenna,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if(response)
+      return response;
+
+  } catch (error) {
+    console.error('Error en la función updateUser:', error);
+    throw error;
+  }
+},
+
+regisUser: async (nombre,correo, contrasenna) => {
+  
+  const url = BASE + '/user/registrar'; 
+  const data = {
+    nombre,
+    correo,
+    contrasenna,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if(response)
+      return response;
+
+  } catch (error) {
+    console.error('Error en la función regisUser:', error);
+    throw error;
+  }
+},
+
 };
 
 module.exports = daoUsers;

@@ -16,6 +16,14 @@ const controlador = {
     const response = await daoUsers.getUser(correo,contrasenna);
     return response;
   },
+  updateUser: async (id,nombre,correo,contrasenna) => {
+    const response = await daoUsers.updateUser(id,nombre,correo,contrasenna);
+    return response;
+  },
+  regisUser: async (nombre,correo,contrasenna) => {
+    const response = await daoUsers.regisUser(nombre,correo,contrasenna);
+    return response;
+  },
 };
 
 module.exports = controlador;

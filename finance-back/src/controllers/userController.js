@@ -27,7 +27,9 @@ const registrarUsuario = async (req, res) => {
   dbConnection.query(query, (err, results) => {
       if (err) {
       res.status(500).send('Error al llamar al proceso almacenado');
-      } else {
+      } else if(results[0] == null){
+        res.status(204).send('No encontrado');
+      }else {
       res.json(results[0])
       }
   });
@@ -45,8 +47,11 @@ const registrarUsuario = async (req, res) => {
     dbConnection.query(query, (err, results) => {
         if (err) {
         res.status(500).send('Error al llamar al proceso almacenado');
-        } else {
-        res.json(results[0])
+        } else if(results[0] == null){
+          res.status(204).send('No encontrado');
+        }
+        else{
+          res.json(results[0])
         }
     });
     }
