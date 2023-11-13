@@ -9,7 +9,7 @@ const registrarIngreso = async (req, res) => {
     const ingresoTitulo = req.body.titulo;
     const categoriaID = req.body.id_categoria;
     const ingresoDescripcion = req.body.descripcion;
-    const query = `CALL sp_InsertarIngreso('${usuarioID}','${ingresoFecha}','${ingresoMonto}',
+    const query = `CALL sp_InsertarIngreso('${usuarioID}','${ingresoFecha.split("T")[0]}','${ingresoMonto}',
                                            '${ingresoTitulo}','${categoriaID}','${ingresoDescripcion}')`;
     
     dbConnection.query(query, (err, results) => {
@@ -27,7 +27,8 @@ const getIngresosRecientes = async (req, res) => {
     const idUsuario = req.body.id_usuario;
     const fechaInicio = req.body.fechaInicio;
     const fechaFin = req.body.fechaFin;
-    const query = `CALL sp_getIngresosRecientes('${idUsuario}','${fechaInicio}','${fechaFin}')`;
+    const query = `CALL sp_getIngresosRecientes('${idUsuario}','${fechaInicio.split("T")[0]}','${fechaFin.split("T")[0]}')`;
+    console.log(query)
     
     dbConnection.query(query, (err, results) => {
         if (err) {

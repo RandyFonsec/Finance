@@ -24,8 +24,8 @@ import Modal from 'react-bootstrap/Modal';
 function Gestionar({categories, addFunction, updateFunction, deleteFunction}) {
   const [name, setName] = useState("");
 
-  const [idEdit, setIdEdit] = useState(-1);
-  const [nameEdit, setNameEdit] = useState("");
+  const [id, setIdEdit] = useState(-1);
+  const [nombre, setNameEdit] = useState("");
 
 
   const [show, setShow] = useState(false);
@@ -53,7 +53,7 @@ function Gestionar({categories, addFunction, updateFunction, deleteFunction}) {
             </Form.Group>
 
             <Button 
-            onClick = {handleShow}
+            onClick = {() => {addFunction(name);handleShow()}}
             variant="primary">+</Button>
            
 
@@ -103,7 +103,7 @@ function Gestionar({categories, addFunction, updateFunction, deleteFunction}) {
             <Form.Group className="mb-3" controlId="1">
               <Form.Label>Nombre</Form.Label>
               <Form.Control 
-              value={nameEdit}
+              value={nombre}
               onChange={(e) => setNameEdit(e.target.value)}
               type="text" 
               placeholder = "Nombre categoría..."
@@ -111,7 +111,7 @@ function Gestionar({categories, addFunction, updateFunction, deleteFunction}) {
             </Form.Group>
 
             <Button 
-            onClick = {() => {updateFunction({idEdit,nameEdit});setNameEdit("");setIdEdit(-1); handleClose()}}
+            onClick = {() => {updateFunction({id,nombre});setNameEdit("");setIdEdit(-1); handleClose()}}
             variant="primary">Guardar</Button>
            
 

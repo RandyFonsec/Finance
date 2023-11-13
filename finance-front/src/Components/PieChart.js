@@ -3,7 +3,7 @@ import CanvasJSReact from '@canvasjs/react-charts';
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const PieChart = ({title}) => {
+const PieChart = ({title,dataPie}) => {
 
   const options = {
     animationEnabled: true,
@@ -16,14 +16,7 @@ const PieChart = ({title}) => {
       type: "pie",
       indexLabel: "{label}: {y}%",
       startAngle: -90,
-      dataPoints: [
-        { y: 20, label: "Airfare" },
-        { y: 24, label: "Food & Drinks" },
-        { y: 20, label: "Accomodation" },
-        { y: 14, label: "Transportation" },
-        { y: 12, label: "Activities" },
-        { y: 10, label: "Misc" }
-      ]
+      dataPoints: dataPie
     }]
   };
 

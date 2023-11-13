@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+import { useAuth } from '../AuthContext';
 
 import CustomCard from '../Components/CustomCard.js'
 import Registrar from '../Components/Registrar.js'
@@ -6,13 +7,55 @@ import Gestionar from '../Components/Gestionar.js'
 import PieChart from '../Components/PieChart.js';
 import DatePicker from "react-datepicker";
 
+import controlador from '../Controller/controlador.js'
+
 import "react-datepicker/dist/react-datepicker.css";
 import styles from './pageStyles.module.css'
 
 
 function Gastos() {
+  const { user } = useAuth();
   const [date1, setDate1] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
+  const [dataPie, setPie] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    cargarCategorias();
+  }, []);
+
+  const cargarCategorias = async () => {
+    try {
+      const response = await controlador.getCategoriasGasto(user.id);
+   
+      if (response.length !== 0) {
+        setCategorias(response);
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función cargarCategorias:', error);
+    }
+  };
+
+  const setDataPie = async() => {
+    
+    try {
+      const response = await controlador.getGastosRecientes(user.id,date1, date2);
+   
+      if (response.length !== 0) {
+          const sumaTotal = response.reduce((total, item) => total + item.MontoTotal, 0);
+          const dataPoints = response.map(item => {
+            let porcentaje = (item.MontoTotal / sumaTotal) * 100;
+            porcentaje = sumaTotal === 0 ? 100 : porcentaje;
+              return { y: porcentaje, label: item.Categoria };
+          });
+          setPie(dataPoints);
+          //console.log(dataPoints)
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función setDataPie:', error);
+    }
+
+  }
 
   const handleDate1 = date => {
     setDate1(date);
@@ -20,23 +63,57 @@ function Gastos() {
 
   const handleDate2 = date => {
     setDate2(date);
+    setDataPie();
   };
 
-  const handleGasto = (gasto) => {
-     alert(JSON.stringify(gasto));
-  }
 
-  const handleAdd = (nombre) => {
-     alert(nombre);
-  }
+  const handleGasto = async(gasto) => {
+    try {
+     const response = await controlador.registrarGasto(JSON.stringify(gasto));
+  
+     if (response.status == 200) {
+       alert("LISTO");
+     } else alert("ERROR");
+   } catch (error) {
+     console.error('Error en la función handleGasto:', error);
+   }
+ }
 
-  const handleUpdate = (categoria) => {
-     alert(JSON.stringify(categoria));
-  }
+ const handleAdd = async(nombre) => {
+   try {
+     const response = await controlador.registrarCategoriaGasto(nombre,user.id);
+  
+     if (response.status == 200) {
+       alert("LISTO");
+     } else alert("ERROR");
+   } catch (error) {
+     console.error('Error en la función handleGasto:', error);
+   }
+ }
 
-  const handleDelete = (id) => {
-     alert(id);
-  }
+ const handleUpdate = async(categoria) => {
+    try {
+     const response = await controlador.actualizarCategoriaGasto(JSON.stringify(categoria));
+  
+     if (response.status == 200) {
+       alert("LISTO");
+     } else alert("ERROR");
+   } catch (error) {
+     console.error('Error en la función handleGasto:', error);
+   }
+ }
+
+ const handleDelete = async(id) => {
+    try {
+     const response = await controlador.eliminarCategoriaGasto(JSON.stringify({id}));
+  
+     if (response.status == 200) {
+       alert("LISTO");
+     } else alert("ERROR");
+   } catch (error) {
+     console.error('Error en la función handleGasto:', error);
+   }
+ }
   return (
     
     <>
@@ -51,7 +128,7 @@ function Gastos() {
           
           selected={date1}
           onChange={handleDate1}
-          dateFormat="dd/MM/yyyy" // Puedes ajustar el formato según tus necesidades
+          dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
           scrollableYearDropdown
         />
         <label className = "ms-4" htmlFor="date1">{"Hasta: "}</label>
@@ -60,28 +137,28 @@ function Gastos() {
 
           selected={date2}
           onChange={handleDate2}
-          dateFormat="dd/MM/yyyy" // Puedes ajustar el formato según tus necesidades
+          dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
           scrollableYearDropdown
       />
       </div>
 
       {/* TODO: Proximamente pasar lista*/}
       <div className="mt-5 pt-5">
-        <PieChart title = {""}/>
+        <PieChart title = {""} dataPie = {dataPie}/>
       </div>
 
     </CustomCard>
 
     <CustomCard title = "Registrar gasto:">
 
-      <Registrar categories = {[{value:1, label:"Cat 1"},{value:2, label:"Cat 2"}]} handleSubmit = {handleGasto}/>
+      <Registrar categories = {categorias} handleSubmit = {handleGasto}/>
 
     </CustomCard>
 
     <CustomCard title = "Gestionar categorías:">
 
       <Gestionar 
-      categories = {[{id:1, nombre:"Cat 1"},{id:2, nombre:"Cat 2"}]} 
+      categories = {categorias} 
       addFunction = {handleAdd}
       deleteFunction = {handleDelete}
       updateFunction = {handleUpdate}

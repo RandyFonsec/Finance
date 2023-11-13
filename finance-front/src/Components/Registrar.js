@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useAuth } from '../AuthContext';
 
 import DatePicker from "react-datepicker";
 import Container from 'react-bootstrap/Container';
@@ -14,17 +15,18 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function Registrar({categories, handleSubmit}) {
   /*Recibe categorias y funcion para subir*/
+  const { user } = useAuth();
+  const [id_usuario,setId]   = useState(user.id)
 
-
-  const [date, setDate] = useState(new Date());
+  const [fecha, setDate] = useState(new Date());
   const [monto, setMonto] = useState(0);
   const [titulo, setTitulo] = useState("");
-  const [categoria, setCategoria] = useState(-1);
+  const [id_categoria, setCategoria] = useState(-1);
   const [descripcion, setDescripcion] = useState("");
 
   const handleButton = () => {
-
-      handleSubmit({date,monto,titulo,categoria,descripcion});
+      console.log(id_categoria)
+      handleSubmit({id_usuario,fecha,monto,titulo,id_categoria,descripcion});
       setDate(new Date());
       setMonto(0);
       setTitulo("");
@@ -32,10 +34,9 @@ function Registrar({categories, handleSubmit}) {
       setDescripcion("");
   }
 
-  const handleDate = date => {
-    setDate(date);
+  const handleDate = fecha => {
+    setDate(fecha);
   };
-
 
   return (
     
@@ -47,9 +48,9 @@ function Registrar({categories, handleSubmit}) {
 
             <Form.Label>Fecha</Form.Label>
             <DatePicker
-              selected={date}
+              selected={fecha}
               onChange={handleDate}
-              dateFormat="dd/MM/yyyy" // Puedes ajustar el formato según tus necesidades
+              dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
               scrollableYearDropdown
             />
 
@@ -82,10 +83,14 @@ function Registrar({categories, handleSubmit}) {
            <Form.Label>Categoria</Form.Label>
            <Form.Select
               onChange={(e) => setCategoria(e.target.value)}
+              defaultValue=""
             >
+              <option value="" disabled>
+              Seleccione una categoría
+              </option>
               {categories.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
+                <option key={option.id} value={option.id}>
+                  {option.nombre}
                 </option>
               ))}
             </Form.Select>

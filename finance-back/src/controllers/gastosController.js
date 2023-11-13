@@ -9,7 +9,7 @@ const registrarGasto = async (req, res) => {
     const gastoTitulo = req.body.titulo;
     const categoriaID = req.body.id_categoria;
     const gastoDescripcion = req.body.descripcion;
-    const query = `CALL sp_InsertarGasto('${usuarioID}','${gastoFecha}','${gastoMonto}',
+    const query = `CALL sp_InsertarGasto('${usuarioID}','${gastoFecha.split("T")[0]}','${gastoMonto}',
                                            '${gastoTitulo}','${categoriaID}','${gastoDescripcion}')`;
     
     dbConnection.query(query, (err, results) => {
@@ -27,7 +27,7 @@ const getGastosRecientes = async (req, res) => {
     const idUsuario = req.body.id_usuario;
     const fechaInicio = req.body.fechaInicio;
     const fechaFin = req.body.fechaFin;
-    const query = `CALL sp_getGastosRecientes('${idUsuario}','${fechaInicio}','${fechaFin}')`;
+    const query = `CALL sp_getGastosRecientes('${idUsuario}','${fechaInicio.split("T")[0]}','${fechaFin.split("T")[0]}')`;
     
     dbConnection.query(query, (err, results) => {
         if (err) {
