@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect } from 'react';
 
 
 import TwoLinesChart from './TwoLinesChart.js'
@@ -12,17 +12,63 @@ import "react-datepicker/dist/react-datepicker.css";
 import styles from './componentStyles.module.css'
 
 
-function GasVIng({isPersonal}){
+function GasVIng({isPersonal,id}){
   const [date1, setDate1] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
+  const [dataChart1, setChart1] = useState([]);
+  const [dataChart2, setChart2] = useState([]);
 
+  useEffect(() => {
+    setDataChartIngreso();
+    setDataChartGasto();
+  }, [isPersonal]); 
+
+  const setDataChartIngreso = async() => {
+    
+    try {
+      const response = await controlador.getIngresosPormes(id,!isPersonal,date1, date2);
+   
+      if (response.length !== 0) {
+          const dataPoints = response.map(item => {
+              return { y: item.MontoTotal,label: `Mes ${item.Mes}` };
+          });
+          setChart1(dataPoints);
+          //console.log(dataPoints)
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función setDataChartIngreso:', error);
+    }
+
+  }
+
+  const setDataChartGasto = async() => {
+    
+    try {
+      const response = await controlador.getGastosPormes(id,!isPersonal,date1, date2);
+   
+      if (response.length !== 0) {
+        const dataPoints = response.map(item => {
+            return { y: item.MontoTotal,label: `Mes ${item.Mes}`};
+          });
+          setChart2(dataPoints);
+          //console.log(dataPoints)
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función setDataChartGasto:', error);
+    }
+
+  }
 
   const handleDate1 = date => {
     setDate1(date);
+    setDataChartIngreso();
+    setDataChartGasto();
   };
 
   const handleDate2 = date => {
     setDate2(date);
+    setDataChartIngreso();
+    setDataChartGasto();
   };
 
   return(
@@ -59,7 +105,7 @@ function GasVIng({isPersonal}){
         />
         </div>
 
-        <TwoLinesChart/>
+        <TwoLinesChart data1 = {dataChart1} data2 = {dataChart2} />
 
         </CustomCard>
     </>

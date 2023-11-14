@@ -4,6 +4,7 @@
 const daoUsers = require('./DAO/daoUsers');
 const daoIngresos = require('./DAO/daoIngresos');
 const daoGastos = require('./DAO/daoGastos');
+const daoReportes = require('./DAO/daoReportes');
 
 const controlador = {
   getUsers: async () => {
@@ -74,6 +75,23 @@ const controlador = {
   },
   eliminarCategoriaGasto: async (id) => {
     const response = await daoGastos.eliminarCategoria(id);
+    return response;
+  },
+  //-------------------------------------------------------------------------------------------//
+  getIngresosPormes: async (id_usuario,es_comercio,fechaInicio, fechaFin) => {
+    const response = await daoReportes.getIngresosPormes(id_usuario,es_comercio,fechaInicio, fechaFin) ;
+    return response;
+  },
+  getGastosPormes: async (id_usuario,es_comercio,fechaInicio, fechaFin) => {
+    const response = await daoReportes.getGastosPormes(id_usuario,es_comercio,fechaInicio, fechaFin) ;
+    return response;
+  },
+  getIngresosPordia: async (id_usuario,es_comercio,fecha) => {
+    const response = await daoReportes.getIngresosPordia(id_usuario,es_comercio,fecha) ;
+    return response;
+  },
+  getGastosPordia: async (id_usuario,es_comercio,fecha) => {
+    const response = await daoReportes.getGastosPordia(id_usuario,es_comercio,fecha) ;
     return response;
   },
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import { useAuth } from '../AuthContext';
 
 
 import Tendencia from '../Components/Tendencia.js'
@@ -13,6 +13,7 @@ import styles from './pageStyles.module.css'
 
 
 function Reportes() {
+  const { user } = useAuth();
   const [isPersonal, setIsPersonal] = useState(true);
 
   const handleIsPersonal = (value) => {
@@ -37,11 +38,11 @@ function Reportes() {
         </div>
         </CustomCard>
 
-        <Tendencia isPersonal = {isPersonal} />
+        <Tendencia isPersonal = {isPersonal} id = {user.id} />
 
-        <Detalle isPersonal = {isPersonal} />
+        <Detalle isPersonal = {isPersonal} id = {user.id} />
         
-        <GasVIng isPersonal = {isPersonal} />       
+        <GasVIng isPersonal = {isPersonal} id = {user.id} />       
 
 
       

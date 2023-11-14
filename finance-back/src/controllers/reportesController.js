@@ -4,10 +4,11 @@ const dbConnection = require('../../dbConfig');
 const getIngresosPormes = async (req, res) => {
 
     const idUsuario = req.body.id_usuario;
-    const es_negocio = req.body.es_comercio;
+    const es_negocio = req.body.es_comercio ? 1 : 0;
     const fechaInicio = req.body.fechaInicio;
     const fechaFin = req.body.fechaFin;
-    const query = `CALL sp_primerReporteIngresos('${idUsuario}','${es_negocio}','${fechaInicio}','${fechaFin}')`;
+    const query = `CALL sp_primerReporteIngresos('${idUsuario}','${es_negocio}','${fechaInicio.split("T")[0]}','${fechaFin.split("T")[0]}')`;
+    
     dbConnection.query(query, (err, results) => {
         if (err) {
         res.status(500).send('Error al llamar al proceso almacenado');
@@ -20,9 +21,10 @@ const getIngresosPormes = async (req, res) => {
 const getIngresosPordia = async (req, res) => {
 
     const p_idUsuario = req.body.id_usuario;
-    const p_es_comercio = req.body.es_comercio;
+    const p_es_comercio = req.body.es_comercio ? 1 : 0;
     const p_fecha = req.body.fecha;
-    const query = `CALL sp_segundoReporteIngresos('${p_idUsuario}','${p_es_comercio}','${p_fecha}')`;
+    const query = `CALL sp_segundoReporteIngresos('${p_idUsuario}','${p_es_comercio}','${p_fecha.split("T")[0]}')`;
+    console.log(query)
     dbConnection.query(query, (err, results) => {
         if (err) {
         res.status(500).send('Error al llamar al proceso almacenado');
@@ -36,11 +38,11 @@ const getIngresosPordia = async (req, res) => {
 const getGastosPormes = async (req, res) => {
 
     const idUsuario = req.body.id_usuario;
-    const es_negocio = req.body.es_comercio;
+    const es_negocio = req.body.es_comercio ? 1 : 0;
     const fechaInicio = req.body.fechaInicio;
     const fechaFin = req.body.fechaFin;
-    const query = `CALL sp_primerReporteGastos('${idUsuario}','${es_negocio}','${fechaInicio}','${fechaFin}')`;
-    
+    const query = `CALL sp_primerReporteGastos('${idUsuario}','${es_negocio}','${fechaInicio.split("T")[0]}','${fechaFin.split("T")[0]}')`;
+
     dbConnection.query(query, (err, results) => {
         if (err) {
         res.status(500).send('Error al llamar al proceso almacenado');
@@ -53,9 +55,9 @@ const getGastosPormes = async (req, res) => {
 const getGastosPordia = async (req, res) => {
 
     const p_idUsuario = req.body.id_usuario;
-    const p_es_comercio = req.body.es_comercio;
+    const p_es_comercio = req.body.es_comercio ? 1 : 0;
     const p_fecha = req.body.fecha;
-    const query = `CALL sp_segundoReporteGastos('${p_idUsuario}','${p_es_comercio}','${p_fecha}')`;
+    const query = `CALL sp_segundoReporteGastos('${p_idUsuario}','${p_es_comercio}','${p_fecha.split("T")[0]}')`;
     
     dbConnection.query(query, (err, results) => {
         if (err) {

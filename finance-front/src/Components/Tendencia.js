@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 
 
 import LineChart from './LineChart.js'
@@ -12,24 +12,75 @@ import "react-datepicker/dist/react-datepicker.css";
 import styles from './componentStyles.module.css'
 
 
-function Tendencia({isPersonal}){
+function Tendencia({isPersonal,id}){
   const [date1, setDate1] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
+  const [dataChart, setChart] = useState([]);
+  const [es_ingreso, setIngreso] = useState(true);
 
+  useEffect(() => {
+    if(es_ingreso)setDataChartIngreso()
+    else setDataChartGasto()
+  }, [isPersonal]); 
+
+
+  const setDataChartIngreso = async() => {
+    
+    try {
+      const response = await controlador.getIngresosPormes(id,!isPersonal,date1, date2);
+   
+      if (response.length !== 0) {
+          const dataPoints = response.map(item => {
+              return { x: item.Mes, y: item.MontoTotal };
+          });
+          setChart(dataPoints);
+          //console.log(dataPoints)
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función setDataChartIngreso:', error);
+    }
+
+  }
+
+  const setDataChartGasto = async() => {
+    
+    try {
+      const response = await controlador.getGastosPormes(id,!isPersonal,date1, date2);
+   
+      if (response.length !== 0) {
+        const dataPoints = response.map(item => {
+            return { x: item.Mes, y: item.MontoTotal };
+          });
+          setChart(dataPoints);
+          //console.log(dataPoints)
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función setDataChartGasto:', error);
+    }
+
+  }
 
   const handleGI = (isIngreso) => {
     let msg = isPersonal ? 'Personal: \n' : 'Negocio: \n';
     msg += isIngreso ? 'Tendencia ingreso' : 'Tendencia gasto';
     alert(msg);
+    setIngreso(isIngreso);
+
+    if(isIngreso)setDataChartIngreso()
+    else setDataChartGasto()
 
   }	
 
   const handleDate1 = date => {
     setDate1(date);
+    if(es_ingreso)setDataChartIngreso()
+    else setDataChartGasto()
   };
 
   const handleDate2 = date => {
     setDate2(date);
+    if(es_ingreso)setDataChartIngreso()
+    else setDataChartGasto()
   };
 
 
@@ -67,7 +118,7 @@ function Tendencia({isPersonal}){
         />
         </div>
 
-        <LineChart/>  
+        <LineChart data = {dataChart} />  
 
     </CustomCard>
     </>
