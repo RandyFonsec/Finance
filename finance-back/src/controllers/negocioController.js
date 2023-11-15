@@ -226,7 +226,7 @@ const registrarIngreso = async (req, res) => {
     const ingresoTitulo = req.body.titulo;
     const categoriaID = req.body.id_categoria;
     const ingresoDescripcion = req.body.descripcion;
-    const query = `CALL sp_InsertarIngresoNegocio('${usuarioID}','${ingresoFecha}','${ingresoMonto}',
+    const query = `CALL sp_InsertarIngresoNegocio('${usuarioID}','${ingresoFecha.split("T")[0]}','${ingresoMonto}',
                                            '${ingresoTitulo}','${categoriaID}','${ingresoDescripcion}')`;
     
     dbConnection.query(query, (err, results) => {
@@ -262,7 +262,7 @@ const registrarGasto = async (req, res) => {
     const gastoTitulo = req.body.titulo;
     const categoriaID = req.body.id_categoria;
     const gastoDescripcion = req.body.descripcion;
-    const query = `CALL sp_InsertarGastoNegocio('${usuarioID}','${gastoFecha}','${gastoMonto}',
+    const query = `CALL sp_InsertarGastoNegocio('${usuarioID}','${gastoFecha.split("T")[0]}','${gastoMonto}',
                                            '${gastoTitulo}','${categoriaID}','${gastoDescripcion}')`;
     
     dbConnection.query(query, (err, results) => {
@@ -294,7 +294,7 @@ const getBalanceImpuestos = async (req, res) => {
     const idUsuario = req.body.id_usuario;
     const fechaInicio = req.body.fechaInicio;
     const fechaFin = req.body.fechaFin;
-    const query = `CALL sp_getBalanceImpuestos('${idUsuario}','${fechaInicio}','${fechaFin}')`;
+    const query = `CALL sp_getBalanceImpuestos('${idUsuario}','${fechaInicio.split("T")[0]}','${fechaFin.split("T")[0]}')`;
     
     dbConnection.query(query, (err, results) => {
         if (err) {

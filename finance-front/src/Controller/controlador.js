@@ -5,6 +5,7 @@ const daoUsers = require('./DAO/daoUsers');
 const daoIngresos = require('./DAO/daoIngresos');
 const daoGastos = require('./DAO/daoGastos');
 const daoReportes = require('./DAO/daoReportes');
+const daoNegocio = require('./DAO/daoNegocio');
 
 const controlador = {
   getUsers: async () => {
@@ -92,6 +93,89 @@ const controlador = {
   },
   getGastosPordia: async (id_usuario,es_comercio,fecha) => {
     const response = await daoReportes.getGastosPordia(id_usuario,es_comercio,fecha) ;
+    return response;
+  },
+  //-------------------------------------------------------------------------------------------//
+  getNegocio: async (id_usuario) => {
+    const response = await daoNegocio.getNegocio(id_usuario);
+    return response;
+  },
+  actualizarNegocio: async (nombre,id_usuario) => {
+    const response = await daoNegocio.actualizarNegocio(nombre,id_usuario);
+    return response;
+  },
+  getBalanceImpuestos: async (id_usuario,fechaInicio, fechaFin) => {
+    const response = await daoNegocio.getBalanceImpuestos(id_usuario,fechaInicio, fechaFin);
+    return response;
+  },
+
+
+  getIngresosNegocio: async (id_usuario) => {
+    const response = await daoNegocio.getIngresos(id_usuario);
+    return response;
+  },
+  registrarIngresoNegocio: async (gasto) => {
+    const response = await daoNegocio.registrarIngreso(gasto);
+    return response;
+  },
+  getCategoriasIngresoNegocio: async (id_usuario) => {
+    const response = await daoNegocio.getCategoriasIngreso(id_usuario);
+    return response;
+  },
+  registrarCategoriaIngresoNegocio: async (nombre,id_usuario) => {
+    const response = await daoNegocio.registrarCategoriaIngreso(nombre,id_usuario);
+    return response;
+  },
+  actualizarCategoriaIngresoNegocio: async (categoria) => {
+    const response = await daoNegocio.actualizarCategoriaIngreso(categoria);
+    return response;
+  },
+  eliminarCategoriaIngresoNegocio: async (id) => {
+    const response = await daoNegocio.eliminarCategoriaIngreso(id);
+    return response;
+  },
+
+
+  getGastosNegocio: async (id_usuario) => {
+    const response = await daoNegocio.getGastos(id_usuario);
+    return response;
+  },
+  registrarGastoNegocio: async (gasto) => {
+    const response = await daoNegocio.registrarGasto(gasto);
+    return response;
+  },
+  getCategoriasGastoNegocio: async (id_usuario) => {
+    const response = await daoNegocio.getCategoriasGasto(id_usuario);
+    return response;
+  },
+  registrarCategoriaGastoNegocio: async (nombre,id_usuario) => {
+    const response = await daoNegocio.registrarCategoriaGasto(nombre,id_usuario);
+    return response;
+  },
+  actualizarCategoriaGastoNegocio: async (categoria) => {
+    const response = await daoNegocio.actualizarCategoriaGasto(categoria);
+    return response;
+  },
+  eliminarCategoriaGastoNegocio: async (id) => {
+    const response = await daoNegocio.eliminarCategoriaGasto(id);
+    return response;
+  },
+
+
+  getImpuestos: async (id_negocio) => {
+    const response = await daoNegocio.getImpuestos(id_negocio);
+    return response;
+  },
+  registrarImpuesto: async (nombre,id_negocio,tasa) => {
+    const response = await daoNegocio.registrarImpuesto(nombre,id_negocio,tasa);
+    return response;
+  },
+  actualizarImpuesto: async (impuesto) => {
+    const response = await daoNegocio.actualizarImpuesto(impuesto);
+    return response;
+  },
+  eliminarImpuestos: async (id) => {
+    const response = await daoNegocio.eliminarImpuestos(id);
     return response;
   },
 };

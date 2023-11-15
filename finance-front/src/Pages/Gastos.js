@@ -57,14 +57,14 @@ function Gastos() {
 
   }
 
-  const handleDate1 = date => {
+ const handleDate1 = date => {
     setDate1(date);
   };
 
   const handleDate2 = date => {
     setDate2(date);
     setDataPie();
-  };
+  }; 
 
 
   const handleGasto = async(gasto) => {

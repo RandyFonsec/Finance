@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { useAuth } from '../AuthContext';
+import controlador from '../Controller/controlador.js'
 
 import CustomCard from './CustomCard.js'
 import Gestionar from './Gestionar.js'
@@ -9,23 +11,127 @@ import Form from 'react-bootstrap/Form';
 
 
 function NegocioConfig({negocio}) {
-  const [nomNegocio, setNomNegocio] = useState(negocio);
+  const { user } = useAuth();
 
-  const [catIngresos, setCatIngresos] = useState([{id:1,nombre:"Ing 1"}]);
-  const [catGastos, setCatGastos] = useState([{id:1,nombre:"Gast 1"}]);
+  const [nomNegocio, setNomNegocio] = useState(negocio.nombre);
+
+  const [catIngresos, setCatIngresos] = useState([]);
+  const [catGastos, setCatGastos] = useState([]);
   
+  useEffect(() => {
+    cargarCategoriasIngresos();
+    cargarCategoriasGastos();
+  }, []);
 
+  const cargarCategoriasIngresos = async () => {
+    try {
+      const response = await controlador.getCategoriasIngresoNegocio(user.id);
+   
+      if (response.length !== 0) {
+        setCatIngresos(response);
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función cargarCategoriasIngresos:', error);
+    }
+  };
+  const cargarCategoriasGastos = async () => {
+    try {
+      const response = await controlador.getCategoriasGastoNegocio(user.id);
+   
+      if (response.length !== 0) {
+        setCatGastos(response);
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función cargarCategoriasGastos:', error);
+    }
+  };
 
-  const handleAdd = (nombre) => {
+  const handleUpdateNegocio = async() => {
+    try {
+      const response = await controlador.actualizarNegocio(nomNegocio,user.id);
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleUpdateNegocio:', error);
+    }
     
   }
 
-  const handleUpdate = async(categoria) => {
-     
+  const handleAddCatIngreso = async(nombre) => {
+    try {
+      const response = await controlador.registrarCategoriaIngresoNegocio(nombre,user.id);
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleAddCatIngreso:', error);
+    }
+    
   }
 
-  const handleDelete = async(id) => {
-     
+  const handleUpdateCatIngreso = async(categoria) => {
+    try {
+      const response = await controlador.actualizarCategoriaIngresoNegocio(JSON.stringify(categoria));
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleUpdateCatIngreso:', error);
+    }
+  }
+
+  const handleDeleteCatIngreso = async(id) => {
+    try {
+      const response = await controlador.eliminarCategoriaIngresoNegocio(JSON.stringify({id}));
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleDeleteCatIngreso:', error);
+    }
+  }
+
+
+
+  const handleAddCatGasto = async(nombre) => {
+    try {
+      const response = await controlador.registrarCategoriaGastoNegocio(nombre,user.id);
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleAddCatGasto:', error);
+    }
+  }
+
+  const handleUpdateCatGasto = async(categoria) => {
+    try {
+      const response = await controlador.actualizarCategoriaGastoNegocio(JSON.stringify(categoria));
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleUpdateCatGasto:', error);
+    }
+  }
+
+  const handleDeleteCatGasto = async(id) => {
+    try {
+      const response = await controlador.eliminarCategoriaGastoNegocio(JSON.stringify({id}));
+   
+      if (response.status == 200) {
+        alert("LISTO");
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función handleDeleteCatGasto:', error);
+    }
   }
 
   return (
@@ -51,7 +157,7 @@ function NegocioConfig({negocio}) {
             <Col sm={3}>
 
             <Button
-            onClick ={() =>  {}}
+            onClick ={() =>  handleUpdateNegocio()}
             variant="primary">Guardar nombre</Button>
 
             </Col>
@@ -65,9 +171,9 @@ function NegocioConfig({negocio}) {
 
       <Gestionar 
       categories = {catIngresos} 
-      addFunction = {handleAdd}
-      deleteFunction = {handleDelete}
-      updateFunction = {handleUpdate}
+      addFunction = {handleAddCatIngreso}
+      deleteFunction = {handleDeleteCatIngreso}
+      updateFunction = {handleUpdateCatIngreso}
       />
 
       </CustomCard>
@@ -79,9 +185,9 @@ function NegocioConfig({negocio}) {
 
       <Gestionar 
       categories = {catGastos} 
-      addFunction = {handleAdd}
-      deleteFunction = {handleDelete}
-      updateFunction = {handleUpdate}
+      addFunction = {handleAddCatGasto}
+      deleteFunction = {handleDeleteCatGasto}
+      updateFunction = {handleUpdateCatGasto}
       />
 
       </CustomCard>

@@ -34,7 +34,7 @@ router.post('/eliminarCategoriaIngreso', eliminarCategoria);
 
 router.put('/registrarCategoriaGasto', registrarCategoriaGasto);
 
-router.get('/getCategorias/:id_usuarioGasto', getCategoriasGasto);
+router.get('/getCategorias/:id_usuario', getCategoriasGasto);
 
 router.post('/actualizarCategoriaGasto', actualizarCategoriaGasto);
 
