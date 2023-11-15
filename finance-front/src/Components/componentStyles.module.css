@@ -48,11 +48,13 @@
 /*------------------------------------------------------------------------------*/
 /*Custom Card.js*/
 .card {
-  marginTop:0px;
   border: 10px; 
   border-radius: 10px;
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 7px 7px 12px 0px rgba(0, 0, 0, 0.5);
 }
+
+
+
 
 
 /*------------------------------------------------------------------------------*/
@@ -97,6 +99,23 @@
   flex-direction: column;
   align-items: center;
 }
+
+
+
+
+/*-------------------------- NEGOCIO       */
+
+.modalNegocio{
+  display: flex;
+  flex-direction: column;
+  padding: 7%;
+}
+
+
+
+
+
+
 
 
 

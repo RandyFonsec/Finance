@@ -22,8 +22,9 @@ getIngresosRecientes: async (id_usuario,fechaInicio, fechaFin) => {
       },
       body: JSON.stringify(data),
     });
-    if(response)
+    if(response){
       return response.json();
+    }
 
   } catch (error) {
     console.error('Error en la función getIngresosRecientes:', error);

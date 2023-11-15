@@ -20,9 +20,7 @@ function Ingresos() {
   const [dataPie, setPie] = useState([]);
   const [categorias, setCategorias] = useState([]);
 
-  useEffect(() => {
-    cargarCategorias();
-  }, []);
+  
 
   const cargarCategorias = async () => {
     try {
@@ -35,7 +33,13 @@ function Ingresos() {
       console.error('Error en la función cargarCategorias:', error);
     }
   };
+  
 
+  useEffect(() => {
+    cargarCategorias();
+  }, []);
+
+  
   const setDataPie = async() => {
     
     try {
@@ -70,7 +74,7 @@ function Ingresos() {
      try {
       const response = await controlador.registrarIngreso(JSON.stringify(gasto));
    
-      if (response.status == 200) {
+      if (response.status === 200) {
         alert("LISTO");
       } else alert("ERROR");
     } catch (error) {
@@ -82,7 +86,7 @@ function Ingresos() {
     try {
       const response = await controlador.registrarCategoria(nombre,user.id);
    
-      if (response.status == 200) {
+      if (response.status === 200) {
         alert("LISTO");
       } else alert("ERROR");
     } catch (error) {
@@ -94,7 +98,7 @@ function Ingresos() {
      try {
       const response = await controlador.actualizarCategoria(JSON.stringify(categoria));
    
-      if (response.status == 200) {
+      if (response.status === 200) {
         alert("LISTO");
       } else alert("ERROR");
     } catch (error) {
@@ -106,7 +110,7 @@ function Ingresos() {
      try {
       const response = await controlador.eliminarCategoria(JSON.stringify({id}));
    
-      if (response.status == 200) {
+      if (response.status === 200) {
         alert("LISTO");
       } else alert("ERROR");
     } catch (error) {
@@ -119,43 +123,43 @@ function Ingresos() {
 
     <div className={styles.page}>
 
-    <CustomCard title = "Ingresos recientes:">
+    <CustomCard>
+      <h3 className="fs-3 fw-bold ">Ingresos recientes</h3>
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
       <div className="mt-3 text-center">
         <label htmlFor="date1">{"Desde: "}</label>
         <DatePicker
-          id="date1"
-          
+          id="date1"          
           selected={date1}
           onChange={handleDate1}
-          dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
+          dateFormat="yyyy/MM/dd" 
           scrollableYearDropdown
         />
         <label className = "ms-4" htmlFor="date1">{"Hasta: "}</label>
         <DatePicker
           id="date2"
-
           selected={date2}
           onChange={handleDate2}
-          dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
+          dateFormat="yyyy/MM/dd"
           scrollableYearDropdown
       />
       </div>
 
-      {/* TODO: Proximamente pasar lista*/}
       <div className="mt-5 pt-5">
         <PieChart title = {""} dataPie = {dataPie}/>
       </div>
 
     </CustomCard>
 
-    <CustomCard title = "Registrar ingreso:">
-
+    <CustomCard estilo = {'my-5'}>
+      <h3 className="fs-3 fw-bold">Registrar ingreso:</h3>      
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
       <Registrar categories = {categorias} handleSubmit = {handleGasto}/>
-
     </CustomCard>
 
-    <CustomCard title = "Gestionar categorías:">
-
+    <CustomCard estilo = {'my-5'}>
+      <h3 className="fs-3 fw-bold">Gestionar categorías:</h3>
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
       <Gestionar 
       categories = {categorias} 
       addFunction = {handleAdd}

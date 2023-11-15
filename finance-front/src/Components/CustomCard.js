@@ -3,13 +3,12 @@ import Card from 'react-bootstrap/Card';
 import styles from './componentStyles.module.css'
 
 
-function CustomCard({ title, children }) {
+function CustomCard({ estilo, children }) {
   return (
-    <div className={styles.card}>
-      <Card className = "my-4">
-        <Card.Body className="px-5 py-5">
-          <Card.Title className="">{title}</Card.Title>
-          <div>  
+    <div className = {`${estilo} ${styles.card}`}>
+      <Card>
+        <Card.Body>
+          <div style = {{padding : '4%'}}>  
             {children}
           </div>  
         </Card.Body>

@@ -24,9 +24,9 @@ function Perfil() {
     try {
       const response = await controlador.updateUser(user.id,nombre,email, pass2);
       
-      if (response.status == 200) {
+      if (response.status === 200) {
         alert("ACTUALIZADO");
-      } else if (response.status == 204) {
+      } else if (response.status === 204) {
         alert(response.statusText);
       } else alert("ERROR");
     } catch (error) {
@@ -41,7 +41,7 @@ function Perfil() {
     <>
     <div className={styles.page}>
 
-    <CustomCard title = "">
+    <CustomCard>
       <h3 className="mb-5">Bienvenido, {user.nombre} </h3>
       <div className = {styles.perfilContainer}>
         <h5>Edición de usuario:</h5>

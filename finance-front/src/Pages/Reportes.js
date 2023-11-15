@@ -38,12 +38,17 @@ function Reportes() {
         </div>
         </CustomCard>
 
-        <Tendencia isPersonal = {isPersonal} id = {user.id} />
+        <div className = "my-5">
+        <Tendencia  isPersonal = {isPersonal} id = {user.id} />
+        </div>
 
+        <div className = "my-5">
         <Detalle isPersonal = {isPersonal} id = {user.id} />
+        </div>
         
+        <div className = "my-5">
         <GasVIng isPersonal = {isPersonal} id = {user.id} />       
-
+        </div>
 
       
     </div>

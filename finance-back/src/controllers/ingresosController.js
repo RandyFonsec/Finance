@@ -3,6 +3,7 @@ const dbConnection = require('../../dbConfig');
 
 const registrarIngreso = async (req, res) => {
 
+    console.log(JSON.stringify(req.body));
     const usuarioID = req.body.id_usuario;
     const ingresoFecha = req.body.fecha;
     const ingresoMonto = req.body.monto;

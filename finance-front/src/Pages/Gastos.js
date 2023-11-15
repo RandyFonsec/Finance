@@ -120,7 +120,9 @@ function Gastos() {
 
     <div className={styles.page}>
 
-    <CustomCard title = "Gastos recientes:">
+    <CustomCard>
+      <h3 className="fs-3 fw-bold ">Gastos recientes:</h3>
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
       <div className="mt-3 text-center">
         <label htmlFor="date1">{"Desde: "}</label>
         <DatePicker
@@ -142,20 +144,24 @@ function Gastos() {
       />
       </div>
 
-      {/* TODO: Proximamente pasar lista*/}
       <div className="mt-5 pt-5">
         <PieChart title = {""} dataPie = {dataPie}/>
       </div>
 
     </CustomCard>
 
-    <CustomCard title = "Registrar gasto:">
+    <CustomCard estilo = {'my-5'}>
+
+      <h3 className="fs-3 fw-bold">Registrar gasto:</h3>
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
 
       <Registrar categories = {categorias} handleSubmit = {handleGasto}/>
 
     </CustomCard>
 
-    <CustomCard title = "Gestionar categorías:">
+    <CustomCard estilo = {'my-5'} >
+      <h3 className="fs-3 fw-bold">Gestionar categorías:</h3>
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
 
       <Gestionar 
       categories = {categorias} 
