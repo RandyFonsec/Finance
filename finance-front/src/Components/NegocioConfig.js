@@ -13,7 +13,15 @@ import Form from 'react-bootstrap/Form';
 function NegocioConfig({negocio}) {
   const { user } = useAuth();
 
-  const [nomNegocio, setNomNegocio] = useState(negocio.nombre);
+  let name;
+
+  if(negocio?.nombre)
+    name = negocio.nombre;
+  else
+    name = "Negocio";
+
+
+  const [nomNegocio, setNomNegocio] = useState(name);
 
   const [catIngresos, setCatIngresos] = useState([]);
   const [catGastos, setCatGastos] = useState([]);

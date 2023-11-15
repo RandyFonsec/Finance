@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { useAuth } from '../AuthContext';
 
+import RadioButtons from './RadioButtons.js'
+
 import DatePicker from "react-datepicker";
 import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
@@ -13,10 +15,18 @@ import Form from 'react-bootstrap/Form';
 import "react-datepicker/dist/react-datepicker.css";
 
 
-function Registrar({categories, handleSubmit}) {
-  /*Recibe categorias y funcion para subir*/
+function RegistrarNegocio({ingCat, gasCat, handleSubmit}) {
+
+  /*Recibe ambas listas de categorias y funcion para subir*/
   const { user } = useAuth();
   const [id_usuario,setId]   = useState(user.id)
+
+
+  const [categories,setCategories]   = useState(ingCat)
+
+
+  const [isIngreso,setIsIngreso]   = useState(true);
+
 
   const [fecha, setDate] = useState(new Date());
   const [monto, setMonto] = useState(0);
@@ -25,7 +35,7 @@ function Registrar({categories, handleSubmit}) {
   const [descripcion, setDescripcion] = useState("");
 
   const handleButton = () => {
-      handleSubmit({id_usuario,fecha,monto,titulo,id_categoria,descripcion});
+      handleSubmit({isIngreso,id_usuario,fecha,monto,titulo,id_categoria,descripcion});
       setDate(new Date());
       setMonto(0);
       setTitulo("");
@@ -37,10 +47,32 @@ function Registrar({categories, handleSubmit}) {
     setDate(fecha);
   };
 
+  const handleGI = (value) => {
+    //Categorias de ingresos o de gastos
+    if(value)
+      setCategories(ingCat)
+    else
+      setCategories(gasCat)
+
+    setIsIngreso(value);
+  } 
+
   return (
     
     <>
     <Container>
+       
+      <Row className = "my-3">
+        <Col xs={2}>
+        </Col>
+        <Col>
+        <RadioButtons 
+              opt1={'Ingresos'} 
+              opt2={'Gastos'} 
+              onOptionChange={handleGI}/>
+        </Col>
+      </Row>
+
       <Row>
         <Col>
           <Stack gap={2} className="col-md-5 mx-auto">
@@ -114,4 +146,4 @@ function Registrar({categories, handleSubmit}) {
   );
 }
 
-export default Registrar;
+export default RegistrarNegocio;

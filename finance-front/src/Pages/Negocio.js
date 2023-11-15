@@ -7,6 +7,7 @@ import controlador from '../Controller/controlador.js'
 import Button from 'react-bootstrap/Button';
 import PieChart from '../Components/PieChart.js';
 import CustomCard from '../Components/CustomCard.js'
+import RegistrarNegocio from '../Components/RegistrarNegocio.js'
 import ModalNegocio from '../Components/ModalNegocio.js'
 import DatePicker from "react-datepicker";
 import styles from './pageStyles.module.css'
@@ -50,7 +51,6 @@ function Gastos() {
               return { y: porcentaje, label: item.Impuesto };
           });
           setPie(dataPoints);
-          //console.log(dataPoints)
       } else alert("ERROR");
     } catch (error) {
       console.error('Error en la función setDataPie:', error);
@@ -86,7 +86,7 @@ function Gastos() {
 
     <CustomCard>
         <div className={styles.reportHeader}>
-        <h2 className="fs-1 fw-bold me-5">{negocio.length > 0 && negocio[0].nombre}</h2>
+        <h2 className="fs-1 fw-bold me-5">{negocio[0]?.nombre || "Negocio"}</h2>
         <Button 
         onClick ={() =>  setShow(true)}
         variant="outline-secondary">Editar</Button>
@@ -95,19 +95,10 @@ function Gastos() {
      
 
 
-    <div className={styles.middle}>
     <CustomCard estilo = {'flex-fill mt-5'}>
-        <h3 className="fs-3 fw-bold me-5">{negocio.length > 0 && negocio[0].nombre}</h3>
+        <h3 className="fs-3 fw-bold me-5">Registrar accion</h3>
+        <RegistrarNegocio ingCat = {[]} gasCat = {[]}/>
     </CustomCard>
-
-
-    <CustomCard estilo = {'flex-fill mt-5'}>
-   
-        <h3 className="fs-3 fw-bold me-5">{negocio.length > 0 && negocio[0].nombre}</h3>
-        
-    </CustomCard>
-
-    </div>
      
 
 
