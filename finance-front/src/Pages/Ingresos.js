@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react';
 import { useAuth } from '../AuthContext';
 
 import CustomCard from '../Components/CustomCard.js'
+import CustomDialog from '../Components/CustomDialog.js'
 import Registrar from '../Components/Registrar.js'
 import Gestionar from '../Components/Gestionar.js'
 import PieChart from '../Components/PieChart.js';
@@ -21,6 +22,17 @@ function Ingresos() {
   const [categorias, setCategorias] = useState([]);
 
   
+  //Para alerta:
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState('');
+  const [msg, setMsg] = useState('');
+  const showAlert = (title,msg) => {
+    setShow(true);
+    setTitle(title);
+    setMsg(msg);
+
+  }
+
 
   const cargarCategorias = async () => {
     try {
@@ -75,7 +87,7 @@ function Ingresos() {
       const response = await controlador.registrarIngreso(JSON.stringify(gasto));
    
       if (response.status === 200) {
-        alert("LISTO");
+        showAlert("Éxito","Ingreso agregado exitosamente");
       } else alert("ERROR");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
@@ -87,7 +99,7 @@ function Ingresos() {
       const response = await controlador.registrarCategoria(nombre,user.id);
    
       if (response.status === 200) {
-        alert("LISTO");
+        showAlert("Éxito","Categoria agregada exitosamente");
       } else alert("ERROR");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
@@ -99,7 +111,7 @@ function Ingresos() {
       const response = await controlador.actualizarCategoria(JSON.stringify(categoria));
    
       if (response.status === 200) {
-        alert("LISTO");
+        showAlert("Éxito","Categoria actualizada exitosamente");
       } else alert("ERROR");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
@@ -169,6 +181,9 @@ function Ingresos() {
 
     </CustomCard>
      
+      <CustomDialog state = {show} handler = {setShow} title = {title} message = {msg}/>
+  
+
     </div>
     </>
   );

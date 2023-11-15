@@ -1,17 +1,19 @@
 import React, {useState,useEffect} from 'react';
 import { useAuth } from '../AuthContext';
 
-import CustomCard from '../Components/CustomCard.js'
+
+import CustomCard from '../Components/CustomCard.js';
 import Registrar from '../Components/Registrar.js'
 import Gestionar from '../Components/Gestionar.js'
 import PieChart from '../Components/PieChart.js';
+import CustomDialog from '../Components/CustomDialog.js';
 import DatePicker from "react-datepicker";
 
 import controlador from '../Controller/controlador.js'
 
 import "react-datepicker/dist/react-datepicker.css";
 import styles from './pageStyles.module.css'
-
+ 
 
 function Gastos() {
   const { user } = useAuth();
@@ -19,6 +21,19 @@ function Gastos() {
   const [date2, setDate2] = useState(new Date());
   const [dataPie, setPie] = useState([]);
   const [categorias, setCategorias] = useState([]);
+
+  //Para alerta:
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState('');
+  const [msg, setMsg] = useState('');
+  const showAlert = (title,msg) => {
+    setShow(true);
+    setTitle(title);
+    setMsg(msg);
+
+  }
+
+
 
   useEffect(() => {
     cargarCategorias();
@@ -119,6 +134,9 @@ function Gastos() {
     <>
 
     <div className={styles.page}>
+    
+
+   
 
     <CustomCard>
       <h3 className="fs-3 fw-bold ">Gastos recientes:</h3>
@@ -130,7 +148,7 @@ function Gastos() {
           
           selected={date1}
           onChange={handleDate1}
-          dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
+          dateFormat="yyyy/MM/dd" 
           scrollableYearDropdown
         />
         <label className = "ms-4" htmlFor="date1">{"Hasta: "}</label>
@@ -139,7 +157,7 @@ function Gastos() {
 
           selected={date2}
           onChange={handleDate2}
-          dateFormat="yyyy/MM/dd" // Puedes ajustar el formato según tus necesidades
+          dateFormat="yyyy/MM/dd" 
           scrollableYearDropdown
       />
       </div>
@@ -172,6 +190,9 @@ function Gastos() {
 
     </CustomCard>
      
+    <CustomDialog state = {show} handler = {setShow} title = {title} message = {msg}/>
+    
+
     </div>
     </>
   );

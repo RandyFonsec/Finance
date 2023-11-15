@@ -44,7 +44,7 @@ END //
 
 DELIMITER ;
 
---CALL sp_InsertarUsuario('Nombre del Usuario', 'correo@example.com', 'contrasenna123');
+-- CALL sp_InsertarUsuario('Nombre del Usuario', 'correo@example.com', 'contrasenna123');
 
 
 DELIMITER //
@@ -74,12 +74,12 @@ END //
 
 DELIMITER ;
 
---CALL sp_ActualizarUsuario(0,'Nombre del Usuario', 'correo@example.com', 'contrasenna123');
+-- CALL sp_ActualizarUsuario(0,'Nombre del Usuario', 'correo@example.com', 'contrasenna123');
 
 
 
 
-----------------------------------------GASTOS-----------------------------------------------------
+-- --------------------------------------GASTOS-----------------------------------------------------
 
 DELIMITER //
 
@@ -98,7 +98,7 @@ END//
 
 DELIMITER ;
 
---CALL sp_InsertarGasto(1, 1, '2023-11-05', 100.00, 'Ejemplo de Gasto', 2, 'Descripción del Gasto');
+quantity sp_InsertarGasto(1, 1, '2023-11-05', 100.00, 'Ejemplo de Gasto', 2, 'Descripción del Gasto');
 
 
 
@@ -122,7 +122,7 @@ END//
 
 DELIMITER ;
 
---CALL sp_getGastosRecientes(1, '2023-01-01', '2023-12-31'); 
+-- CALL sp_getGastosRecientes(1, '2023-01-01', '2023-12-31'); 
 
 
 DELIMITER //
@@ -187,7 +187,7 @@ DELIMITER ;
 
 
 
-----------------------------------------INGRESOS-----------------------------------------------------
+-- --------------------------------------INGRESOS-----------------------------------------------------
 
 
 DELIMITER //
@@ -207,7 +207,7 @@ END//
 
 DELIMITER ;
 
---CALL sp_InsertarIngreso(1, 1, '2023-11-05', 100.00, 'Ejemplo de ingreso', 2, 'Descripción del ingreso');
+-- CALL sp_InsertarIngreso(1, 1, '2023-11-05', 100.00, 'Ejemplo de ingreso', 2, 'Descripción del ingreso');
 
 
 
@@ -231,7 +231,7 @@ END//
 
 DELIMITER ;
 
---CALL sp_getIngresosRecientes(1, '2023-01-01', '2023-12-31'); 
+-- CALL sp_getIngresosRecientes(1, '2023-01-01', '2023-12-31'); 
 
 
 DELIMITER //
@@ -296,7 +296,7 @@ DELIMITER ;
 
 
 
-----------------------------------------NEGOCIO-----------------------------------------------------
+-- --------------------------------------NEGOCIO-----------------------------------------------------
 
 
 
@@ -309,7 +309,7 @@ END;
 //
 DELIMITER ;
 
---CALL sp_getNegocio(1);
+-- CALL sp_getNegocio(1);
 
 DELIMITER //
 CREATE PROCEDURE sp_ActualizarNegocio(
@@ -321,7 +321,7 @@ END;
 //
 DELIMITER ;
 
---CALL sp_ActualizarNegocio(1, 'Nuevo Nombre');
+-- CALL sp_ActualizarNegocio(1, 'Nuevo Nombre');
 
 DELIMITER //
 CREATE PROCEDURE sp_CrearImpuesto(
@@ -334,7 +334,7 @@ BEGIN
 END;
 //
 DELIMITER ;
---CALL sp_CrearImpuesto(1, 'Impuesto 1', 10.50); 
+-- CALL sp_CrearImpuesto(1, 'Impuesto 1', 10.50); 
 
 
 DELIMITER //
@@ -344,7 +344,7 @@ BEGIN
 END;
 //
 DELIMITER ;
---CALL sp_getImpuestos(1); 
+-- CALL sp_getImpuestos(1); 
 
 
 DELIMITER //
@@ -359,7 +359,7 @@ BEGIN
 END;
 //
 DELIMITER ;
---CALL sp_ActualizarImpuesto(1, 'Nuevo Nombre', 15.75); 
+-- CALL sp_ActualizarImpuesto(1, 'Nuevo Nombre', 15.75); 
 
 
 DELIMITER //
@@ -370,7 +370,7 @@ END;
 //
 DELIMITER ;
 
---CALL sp_EliminarImpuesto(1); 
+-- CALL sp_EliminarImpuesto(1); 
 DELIMITER //
 CREATE PROCEDURE sp_CrearCategoriaIngresoNegocio(
     IN usuarioID INT,
@@ -549,7 +549,7 @@ END//
 
 DELIMITER ;
 
---CALL sp_getBalanceImpuestos(1, '2023-01-01', '2023-12-31'); 
+-- CALL sp_getBalanceImpuestos(1, '2023-01-01', '2023-12-31'); 
 
 DELIMITER //
 CREATE PROCEDURE sp_getGastos(IN usuarioID INT)
@@ -571,7 +571,7 @@ DELIMITER ;
 
 
 
-----------------------------------------REPORTES-----------------------------------------------------
+-- --------------------------------------REPORTES-----------------------------------------------------
 
 
 
@@ -624,7 +624,7 @@ END //
 
 DELIMITER ;
 
---CALL sp_primerReporteIngresos(1,0, '2023-01-02','2023-11-05');
+-- CALL sp_primerReporteIngresos(1,0, '2023-01-02','2023-11-05');
 
 
 DELIMITER //
@@ -672,7 +672,7 @@ END //
 
 DELIMITER ;
 
---CALL sp_segundoReporteIngresos(1,0, '2023-11-25');
+-- CALL sp_segundoReporteIngresos(1,0, '2023-11-25');
 
 
 
@@ -725,7 +725,7 @@ END //
 
 DELIMITER ;
 
---CALL sp_primerReporteGastos(1,0, '2023-01-02','2023-11-05');
+-- CALL sp_primerReporteGastos(1,0, '2023-01-02','2023-11-05');
 
 
 DELIMITER //
@@ -773,4 +773,4 @@ END //
 
 DELIMITER ;
 
---CALL sp_segundoReporteGastos(1,0, '2023-11-25');
+-- CALL sp_segundoReporteGastos(1,0, '2023-11-25');
