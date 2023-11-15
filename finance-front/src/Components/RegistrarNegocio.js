@@ -35,7 +35,7 @@ function RegistrarNegocio({ingCat, gasCat, handleSubmit}) {
   const [descripcion, setDescripcion] = useState("");
 
   const handleButton = () => {
-      handleSubmit({isIngreso,id_usuario,fecha,monto,titulo,id_categoria,descripcion});
+      handleSubmit(isIngreso,{id_usuario,fecha,monto,titulo,id_categoria,descripcion});
       setDate(new Date());
       setMonto(0);
       setTitulo("");
@@ -116,7 +116,7 @@ function RegistrarNegocio({ingCat, gasCat, handleSubmit}) {
               onChange={(e) => setCategoria(e.target.value)}
               defaultValue=""
             >
-              <option value="" disabled>
+              <option value="" >
               Seleccione una categoría
               </option>
               {categories.map((option) => (

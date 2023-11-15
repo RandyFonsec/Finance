@@ -20,10 +20,14 @@ function Gastos() {
   const [dataPie, setPie] = useState([]);
   const [show, setShow] = useState(false);
   const [negocio, setNegocio] = useState([]);
+  const [catIngresos, setCatIngresos] = useState([]);
+  const [catGastos, setCatGastos] = useState([]);
 
   useEffect(() => {
     getNegocio();
-  }, [negocio]); 
+    cargarCategoriasIngresos();
+    cargarCategoriasGastos();
+  }, [show]); 
 
   const getNegocio = async () => {
     try {
@@ -31,10 +35,34 @@ function Gastos() {
    
       if (response.length !== 0) {
         setNegocio(response);
-        console.log(response)
+        //console.log(response)
       } else alert("ERROR");
     } catch (error) {
       console.error('Error en la función cargarCategorias:', error);
+    }
+  };
+
+  const cargarCategoriasIngresos = async () => {
+    try {
+      const response = await controlador.getCategoriasIngresoNegocio(user.id);
+   
+      if (response.length !== 0) {
+        setCatIngresos(response);
+        console.log(response)
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función cargarCategoriasIngresos:', error);
+    }
+  };
+  const cargarCategoriasGastos = async () => {
+    try {
+      const response = await controlador.getCategoriasGastoNegocio(user.id);
+   
+      if (response.length !== 0) {
+        setCatGastos(response);
+      } else alert("ERROR");
+    } catch (error) {
+      console.error('Error en la función cargarCategoriasGastos:', error);
     }
   };
 
@@ -57,6 +85,21 @@ function Gastos() {
     }
 
   }
+
+  const handleGI = async(isIngreso,gasto) => {
+    let response;
+    try {
+
+      if (isIngreso) response = await controlador.registrarIngresoNegocio(JSON.stringify(gasto));
+      else response = await controlador.registrarGastoNegocio(JSON.stringify(gasto));
+  
+     if (response.status == 200) {
+       alert("LISTO");
+     } else alert("ERROR");
+   } catch (error) {
+     console.error('Error en la función handleGasto:', error);
+   }
+ }
 
   const handleDate1 = date => {
     setDate1(date);
@@ -97,7 +140,7 @@ function Gastos() {
 
     <CustomCard estilo = {'flex-fill mt-5'}>
         <h3 className="fs-3 fw-bold me-5">Registrar accion</h3>
-        <RegistrarNegocio ingCat = {[]} gasCat = {[]}/>
+        <RegistrarNegocio ingCat = {catIngresos} gasCat = {catGastos} handleSubmit = {handleGI}/>
     </CustomCard>
      
 
