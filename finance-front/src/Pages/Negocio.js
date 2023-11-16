@@ -150,7 +150,8 @@ function Gastos() {
 
 
     <CustomCard estilo = {'flex-fill mt-5'}>
-        <h3 className="fs-3 fw-bold me-5">Registrar accion</h3>
+        <h3 className="fs-3 fw-bold me-5">Registrar acción:</h3>
+        <hr className="bg-danger border-2 border-top border-dark mb-5" />
         <RegistrarNegocio ingCat = {catIngresos} gasCat = {catGastos} handleSubmit = {handleGI}/>
     </CustomCard>
      

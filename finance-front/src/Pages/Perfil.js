@@ -15,7 +15,7 @@ function Perfil() {
   const { user } = useAuth();
 
   const [nombre, setNombre] = useState(user.nombre);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(user.email);
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
 
@@ -62,7 +62,7 @@ function Perfil() {
           <Form.Group className="mb-3" controlId="1">
             <Form.Label>Nombre</Form.Label>
             <Form.Control 
-            value={user.nombre}
+            value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             type="text" 
             placeholder="Nombre" />

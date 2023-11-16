@@ -7,10 +7,10 @@ const TwoLinesChart = ({data1,data2}) => {
   const options = {
     animationEnabled: true,
     title: {
-      text: "Number of New Customers"
+      text: ""
     },
     axisY: {
-      title: "Number of Customers"
+      title: ""
     },
     toolTip: {
       shared: true

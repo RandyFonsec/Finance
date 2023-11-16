@@ -4,6 +4,7 @@ import controlador from '../Controller/controlador.js'
 
 import CustomCard from './CustomCard.js'
 import Gestionar from './Gestionar.js'
+import GestionarImpuestos from './GestionarImpuestos.js'
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -207,9 +208,34 @@ function NegocioConfig({negocio}) {
       addFunction = {handleAddCatGasto}
       deleteFunction = {handleDeleteCatGasto}
       updateFunction = {handleUpdateCatGasto}
+      />  
+      </CustomCard>
+
+
+      <CustomCard estilo = {'mt-5'}>
+
+      <h5 className="fs-5 fw-bold">Gestionar impuestos:</h5>
+      <hr className="bg-danger border-2 border-top border-dark mb-5" />
+
+      <GestionarImpuestos 
+      categories = {catGastos} 
+      addFunction = {handleAddCatGasto}
+      deleteFunction = {handleDeleteCatGasto}
+      updateFunction = {handleUpdateCatGasto}
       />
 
       </CustomCard>
+
+
+
+
+
+
+
+
+
+
+
 
       <CustomDialog state = {show} handler = {setShow} title = {title} message = {msg}/>
 

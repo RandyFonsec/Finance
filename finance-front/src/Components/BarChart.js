@@ -6,7 +6,7 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const BarChart = ({data}) => {
   const options = {
     title: {
-      text: "Basic Column Chart"
+      text: ""
     },
     data: [
       {

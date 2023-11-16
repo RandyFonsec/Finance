@@ -9,14 +9,14 @@ const LineChart = ({data}) => {
     exportEnabled: true,
     theme: "light2",
     title: {
-      text: "Bounce Rate by Week of Year"
+      text: ""
     },
     axisY: {
-      title: "Bounce Rate",
+      title: "",
       suffix: "₡"
     },
     axisX: {
-      title: "Week of Year",
+      title: "",
       prefix: "W",
       interval: 2
     },
