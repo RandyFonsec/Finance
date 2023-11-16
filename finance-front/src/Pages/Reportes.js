@@ -19,7 +19,7 @@ function Reportes() {
   const handleIsPersonal = (value) => {
     setIsPersonal(value);
     let msg = value ? 'Personal: \n' : 'Negocio: \n';
-    alert(msg);
+    //alert(msg);
 
   } 
 

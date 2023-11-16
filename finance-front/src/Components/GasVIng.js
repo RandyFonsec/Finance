@@ -34,7 +34,7 @@ function GasVIng({isPersonal,id}){
           });
           setChart1(dataPoints);
           //console.log(dataPoints)
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataChartIngreso:', error);
     }
@@ -52,7 +52,7 @@ function GasVIng({isPersonal,id}){
           });
           setChart2(dataPoints);
           //console.log(dataPoints)
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataChartGasto:', error);
     }
@@ -104,8 +104,14 @@ function GasVIng({isPersonal,id}){
           scrollableYearDropdown
         />
         </div>
-
-        <TwoLinesChart data1 = {dataChart1} data2 = {dataChart2} />
+        <div className="mt-5 pt-5">
+        {dataChart1.length === 0 && dataChart2.length === 0 ? (
+          <p style={{ textAlign: 'center', fontWeight: 'bold',fontSize: '1.3em'  }}>
+            No se encontraron datos en la fecha seleccionada.</p>
+        ) : (
+          <TwoLinesChart data1 = {dataChart1} data2 = {dataChart2} />
+        )}
+      </div>
 
         </CustomCard>
     </>

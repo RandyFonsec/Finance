@@ -45,7 +45,7 @@ function Gastos() {
    
       if (response.length !== 0) {
         setCategorias(response);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener categorias");
     } catch (error) {
       console.error('Error en la función cargarCategorias:', error);
     }
@@ -65,7 +65,7 @@ function Gastos() {
           });
           setPie(dataPoints);
           //console.log(dataPoints)
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataPie:', error);
     }
@@ -74,6 +74,7 @@ function Gastos() {
 
  const handleDate1 = date => {
     setDate1(date);
+    setDataPie();
   };
 
   const handleDate2 = date => {
@@ -87,8 +88,8 @@ function Gastos() {
      const response = await controlador.registrarGasto(JSON.stringify(gasto));
   
      if (response.status == 200) {
-       alert("LISTO");
-     } else alert("ERROR");
+      showAlert("Éxito","Gasto agregado exitosamente");
+     } else alert("ERROR de conexión");
    } catch (error) {
      console.error('Error en la función handleGasto:', error);
    }
@@ -99,8 +100,8 @@ function Gastos() {
      const response = await controlador.registrarCategoriaGasto(nombre,user.id);
   
      if (response.status == 200) {
-       alert("LISTO");
-     } else alert("ERROR");
+      showAlert("Éxito","Categoria agregada exitosamente");
+     } else alert("ERROR de conexión");
    } catch (error) {
      console.error('Error en la función handleGasto:', error);
    }
@@ -111,8 +112,8 @@ function Gastos() {
      const response = await controlador.actualizarCategoriaGasto(JSON.stringify(categoria));
   
      if (response.status == 200) {
-       alert("LISTO");
-     } else alert("ERROR");
+      showAlert("Éxito","Categoria actualizada exitosamente");
+     } else alert("ERROR de conexión");
    } catch (error) {
      console.error('Error en la función handleGasto:', error);
    }
@@ -123,8 +124,8 @@ function Gastos() {
      const response = await controlador.eliminarCategoriaGasto(JSON.stringify({id}));
   
      if (response.status == 200) {
-       alert("LISTO");
-     } else alert("ERROR");
+      showAlert("Éxito","Categoria eliminada exitosamente");
+     } else alert("ERROR de conexión");
    } catch (error) {
      console.error('Error en la función handleGasto:', error);
    }
@@ -163,7 +164,12 @@ function Gastos() {
       </div>
 
       <div className="mt-5 pt-5">
-        <PieChart title = {""} dataPie = {dataPie}/>
+        {dataPie.length === 0 ? (
+          <p style={{ textAlign: 'center', fontWeight: 'bold',fontSize: '1.3em'  }}>
+            No se encontraron datos en la fecha seleccionada.</p>
+        ) : (
+          <PieChart title="" dataPie={dataPie} />
+        )}
       </div>
 
     </CustomCard>

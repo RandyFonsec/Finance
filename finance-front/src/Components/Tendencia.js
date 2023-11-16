@@ -35,7 +35,7 @@ function Tendencia({isPersonal,id}){
           });
           setChart(dataPoints);
           //console.log(dataPoints)
-      } else alert("ERROR");
+      } else alert("ERROR  al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataChartIngreso:', error);
     }
@@ -53,7 +53,7 @@ function Tendencia({isPersonal,id}){
           });
           setChart(dataPoints);
           //console.log(dataPoints)
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataChartGasto:', error);
     }
@@ -63,7 +63,7 @@ function Tendencia({isPersonal,id}){
   const handleGI = (isIngreso) => {
     let msg = isPersonal ? 'Personal: \n' : 'Negocio: \n';
     msg += isIngreso ? 'Tendencia ingreso' : 'Tendencia gasto';
-    alert(msg);
+    //alert(msg);
     setIngreso(isIngreso);
 
     if(isIngreso)setDataChartIngreso()
@@ -118,7 +118,14 @@ function Tendencia({isPersonal,id}){
         />
         </div>
 
-        <LineChart data = {dataChart} />  
+        <div className="mt-5 pt-5">
+        {dataChart.length === 0 ? (
+          <p style={{ textAlign: 'center', fontWeight: 'bold',fontSize: '1.3em'  }}>
+            No se encontraron datos en la fecha seleccionada.</p>
+        ) : (
+          <LineChart data = {dataChart} />  
+        )}
+      </div>
 
     </CustomCard>
     </>

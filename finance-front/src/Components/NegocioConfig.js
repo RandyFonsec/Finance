@@ -7,11 +7,22 @@ import Gestionar from './Gestionar.js'
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import CustomDialog from '../Components/CustomDialog.js';
 
 
 
 function NegocioConfig({negocio}) {
   const { user } = useAuth();
+
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState('');
+  const [msg, setMsg] = useState('');
+  const showAlert = (title,msg) => {
+    setShow(true);
+    setTitle(title);
+    setMsg(msg);
+
+  }
 
   let name;
 
@@ -37,7 +48,7 @@ function NegocioConfig({negocio}) {
    
       if (response.length !== 0) {
         setCatIngresos(response);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función cargarCategoriasIngresos:', error);
     }
@@ -48,7 +59,7 @@ function NegocioConfig({negocio}) {
    
       if (response.length !== 0) {
         setCatGastos(response);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función cargarCategoriasGastos:', error);
     }
@@ -59,8 +70,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.actualizarNegocio(nomNegocio,user.id);
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Nombre actualizado exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleUpdateNegocio:', error);
     }
@@ -72,8 +83,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.registrarCategoriaIngresoNegocio(nombre,user.id);
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria agregada exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleAddCatIngreso:', error);
     }
@@ -85,8 +96,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.actualizarCategoriaIngresoNegocio(JSON.stringify(categoria));
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria actualizada exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleUpdateCatIngreso:', error);
     }
@@ -97,8 +108,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.eliminarCategoriaIngresoNegocio(JSON.stringify({id}));
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria eliminada exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleDeleteCatIngreso:', error);
     }
@@ -111,8 +122,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.registrarCategoriaGastoNegocio(nombre,user.id);
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria agregada exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleAddCatGasto:', error);
     }
@@ -123,8 +134,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.actualizarCategoriaGastoNegocio(JSON.stringify(categoria));
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria actualizada exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleUpdateCatGasto:', error);
     }
@@ -135,8 +146,8 @@ function NegocioConfig({negocio}) {
       const response = await controlador.eliminarCategoriaGastoNegocio(JSON.stringify({id}));
    
       if (response.status == 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria eliminada exitosamente");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función handleDeleteCatGasto:', error);
     }
@@ -200,6 +211,7 @@ function NegocioConfig({negocio}) {
 
       </CustomCard>
 
+      <CustomDialog state = {show} handler = {setShow} title = {title} message = {msg}/>
 
     </>
   );

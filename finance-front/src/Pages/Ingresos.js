@@ -40,7 +40,7 @@ function Ingresos() {
    
       if (response.length !== 0) {
         setCategorias(response);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener categorias");
     } catch (error) {
       console.error('Error en la función cargarCategorias:', error);
     }
@@ -65,8 +65,8 @@ function Ingresos() {
               return { y: porcentaje, label: item.Categoria };
           });
           setPie(dataPoints);
-          console.log(dataPoints)
-      } else alert("ERROR");
+          //console.log(dataPoints)
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataPie:', error);
     }
@@ -75,6 +75,7 @@ function Ingresos() {
 
   const handleDate1 = date => {
     setDate1(date);
+    setDataPie();
   };
 
   const handleDate2 = date => {
@@ -88,7 +89,7 @@ function Ingresos() {
    
       if (response.status === 200) {
         showAlert("Éxito","Ingreso agregado exitosamente");
-      } else alert("ERROR");
+      } else alert("ERROR de conexión");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
     }
@@ -100,7 +101,7 @@ function Ingresos() {
    
       if (response.status === 200) {
         showAlert("Éxito","Categoria agregada exitosamente");
-      } else alert("ERROR");
+      } else alert("ERROR de conexión");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
     }
@@ -112,7 +113,7 @@ function Ingresos() {
    
       if (response.status === 200) {
         showAlert("Éxito","Categoria actualizada exitosamente");
-      } else alert("ERROR");
+      } else alert("ERROR de conexión");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
     }
@@ -123,8 +124,8 @@ function Ingresos() {
       const response = await controlador.eliminarCategoria(JSON.stringify({id}));
    
       if (response.status === 200) {
-        alert("LISTO");
-      } else alert("ERROR");
+        showAlert("Éxito","Categoria eliminada exitosamente");
+      } else alert("ERROR de conexión");
     } catch (error) {
       console.error('Error en la función handleGasto:', error);
     }
@@ -158,7 +159,12 @@ function Ingresos() {
       </div>
 
       <div className="mt-5 pt-5">
-        <PieChart title = {""} dataPie = {dataPie}/>
+        {dataPie.length === 0 ? (
+          <p style={{ textAlign: 'center', fontWeight: 'bold',fontSize: '1.3em'  }}>
+            No se encontraron datos en la fecha seleccionada.</p>
+        ) : (
+          <PieChart title="" dataPie={dataPie} />
+        )}
       </div>
 
     </CustomCard>

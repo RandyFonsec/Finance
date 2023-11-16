@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import CustomCard from '../Components/CustomCard.js'
 import controlador from '../Controller/controlador.js'
+import CustomDialog from '../Components/CustomDialog.js';
 
 import styles from './pageStyles.module.css'
 
@@ -18,6 +19,17 @@ function Perfil() {
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
 
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState('');
+  const [msg, setMsg] = useState('');
+  const showAlert = (title,msg) => {
+    setShow(true);
+    setTitle(title);
+    setMsg(msg);
+
+  }
+
+
 
   const handleUpdate = async() => {
     //Hacer algo con los datos updateUser: async (id,nombre,correo,contrasenna)
@@ -25,10 +37,10 @@ function Perfil() {
       const response = await controlador.updateUser(user.id,nombre,email, pass2);
       
       if (response.status === 200) {
-        alert("ACTUALIZADO");
+        showAlert("Éxito","Su perfil se ha actualizado correctamente");
       } else if (response.status === 204) {
         alert(response.statusText);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener los datos");
     } catch (error) {
       console.error('Error en la función handleUpdate:', error);
     }
@@ -96,7 +108,7 @@ function Perfil() {
       </div>
 
      </CustomCard>
-     
+     <CustomDialog state = {show} handler = {setShow} title = {title} message = {msg}/>
     </div>
     </>
   );

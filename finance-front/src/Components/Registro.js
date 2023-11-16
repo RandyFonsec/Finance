@@ -6,6 +6,7 @@ import styles from './componentStyles.module.css'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CustomCard from './CustomCard.js'
+import CustomDialog from '../Components/CustomDialog.js'
 
 import controlador from '../Controller/controlador.js'
 
@@ -16,16 +17,26 @@ function Registro() {
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
 
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState('');
+  const [msg, setMsg] = useState('');
+  const showAlert = (title,msg) => {
+    setShow(true);
+    setTitle(title);
+    setMsg(msg);
+
+  }
+
   const handleRegis = async() => {
-    //Hacer algo con los datos updateUser: async (id,nombre,correo,contrasenna)
+    //Hacer algo con los datos
     try {
       const response = await controlador.regisUser(nombre,email, pass1);
       
       if (response.status == 200) {
-        alert("REGISTRADO");
+        showAlert("Registro éxitoso","Se ha registrado correctamente");
       } else if (response.status == 204) {
         alert(response.statusText);
-      } else alert("ERROR");
+      } else alert("ERROR de conexión");
     } catch (error) {
       console.error('Error en la función handleRegis:', error);
     }
@@ -86,6 +97,7 @@ function Registro() {
 
 
       </CustomCard>
+      <CustomDialog state = {show} handler = {setShow} title = {title} message = {msg}/>
      
     </div>
     </>

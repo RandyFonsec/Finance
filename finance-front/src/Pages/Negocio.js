@@ -7,6 +7,7 @@ import controlador from '../Controller/controlador.js'
 import Button from 'react-bootstrap/Button';
 import PieChart from '../Components/PieChart.js';
 import CustomCard from '../Components/CustomCard.js'
+import CustomDialog from '../Components/CustomDialog.js';
 import RegistrarNegocio from '../Components/RegistrarNegocio.js'
 import ModalNegocio from '../Components/ModalNegocio.js'
 import DatePicker from "react-datepicker";
@@ -23,6 +24,16 @@ function Gastos() {
   const [catIngresos, setCatIngresos] = useState([]);
   const [catGastos, setCatGastos] = useState([]);
 
+  const [show2, setShow2] = useState(false);
+  const [title, setTitle] = useState('');
+  const [msg, setMsg] = useState('');
+  const showAlert = (title,msg) => {
+    setShow(true);
+    setTitle(title);
+    setMsg(msg);
+
+  }
+
   useEffect(() => {
     getNegocio();
     cargarCategoriasIngresos();
@@ -36,7 +47,7 @@ function Gastos() {
       if (response.length !== 0) {
         setNegocio(response);
         //console.log(response)
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función cargarCategorias:', error);
     }
@@ -49,7 +60,7 @@ function Gastos() {
       if (response.length !== 0) {
         setCatIngresos(response);
         console.log(response)
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función cargarCategoriasIngresos:', error);
     }
@@ -60,7 +71,7 @@ function Gastos() {
    
       if (response.length !== 0) {
         setCatGastos(response);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función cargarCategoriasGastos:', error);
     }
@@ -79,7 +90,7 @@ function Gastos() {
               return { y: porcentaje, label: item.Impuesto };
           });
           setPie(dataPoints);
-      } else alert("ERROR");
+      } else alert("ERROR al obtener datos");
     } catch (error) {
       console.error('Error en la función setDataPie:', error);
     }
@@ -94,8 +105,8 @@ function Gastos() {
       else response = await controlador.registrarGastoNegocio(JSON.stringify(gasto));
   
      if (response.status == 200) {
-       alert("LISTO");
-     } else alert("ERROR");
+      showAlert("Éxito","Movimiento agregado exitosamente");
+     } else alert("ERROR al obtener datos");
    } catch (error) {
      console.error('Error en la función handleGasto:', error);
    }
@@ -171,13 +182,18 @@ function Gastos() {
       </div>
 
       <div className="mt-5 pt-5">
-        <PieChart title = {""} dataPie = {dataPie}/>
+        {dataPie.length === 0 ? (
+          <p style={{ textAlign: 'center', fontWeight: 'bold',fontSize: '1.3em'  }}>
+            No se encontraron datos en la fecha seleccionada.</p>
+        ) : (
+          <PieChart title="" dataPie={dataPie} />
+        )}
       </div>
         
     </CustomCard>
     
 
-
+    <CustomDialog state = {show2} handler = {setShow} title = {title} message = {msg}/>
 
 
 

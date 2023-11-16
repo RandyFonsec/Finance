@@ -53,7 +53,7 @@ function Gestionar({categories, addFunction, updateFunction, deleteFunction}) {
             </Form.Group>
 
             <Button 
-            onClick = {() => {addFunction(name);handleShow()}}
+            onClick = {() => {addFunction(name)}}
             variant="primary">+</Button>
            
 
