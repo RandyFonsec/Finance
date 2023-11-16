@@ -1,3 +1,5 @@
+use finance;
+
 DELIMITER //
 
 CREATE PROCEDURE sp_VerificarUsuario(IN correoUsuario VARCHAR(255), IN contrasennaUsuario VARCHAR(255))
@@ -8,10 +10,10 @@ BEGIN
     WHERE correo = correoUsuario AND contrasenna = contrasennaUsuario;
 
 END //
+-- CALL sp_VerificarUsuario('juan@example.com', 'miContrasenna123');
 
 DELIMITER ;
 
--- CALL sp_VerificarUsuario('juan@example.com', 'miContrasenna123');
 
 DELIMITER //
 
@@ -41,10 +43,10 @@ BEGIN
         
     END IF;
 END //
+-- CALL sp_InsertarUsuario('Nombre del Usuario', 'correo@example.com', 'contrasenna123');
 
 DELIMITER ;
 
--- CALL sp_InsertarUsuario('Nombre del Usuario', 'correo@example.com', 'contrasenna123');
 
 
 DELIMITER //
@@ -71,15 +73,15 @@ BEGIN
         
     END IF;
 END //
+-- CALL sp_ActualizarUsuario(0,'Nombre del Usuario', 'correo@example.com', 'contrasenna123');
 
 DELIMITER ;
 
--- CALL sp_ActualizarUsuario(0,'Nombre del Usuario', 'correo@example.com', 'contrasenna123');
 
 
 
 
--- --------------------------------------GASTOS-----------------------------------------------------
+#-- --------------------------------------GASTOS-----------------------------------------------------
 
 DELIMITER //
 
@@ -95,10 +97,10 @@ BEGIN
     INSERT INTO Gasto (id_usuario, es_comercio, fecha, monto, titulo, id_categoria, descripcion)
     VALUES (usuarioID, 0, gastoFecha, gastoMonto, gastoTitulo, categoriaID, gastoDescripcion);
 END//
+--quantity sp_InsertarGasto(1, 1, '2023-11-05', 100.00, 'Ejemplo de Gasto', 2, 'Descripción del Gasto');
 
 DELIMITER ;
 
-quantity sp_InsertarGasto(1, 1, '2023-11-05', 100.00, 'Ejemplo de Gasto', 2, 'Descripción del Gasto');
 
 
 
@@ -119,10 +121,10 @@ BEGIN
     AND g.fecha BETWEEN fechaInicio AND fechaFin
     GROUP BY cg.nombre;
 END//
+-- CALL sp_getGastosRecientes(1, '2023-01-01', '2023-12-31'); 
 
 DELIMITER ;
 
--- CALL sp_getGastosRecientes(1, '2023-01-01', '2023-12-31'); 
 
 
 DELIMITER //
@@ -187,7 +189,7 @@ DELIMITER ;
 
 
 
--- --------------------------------------INGRESOS-----------------------------------------------------
+#-- --------------------------------------INGRESOS-----------------------------------------------------
 
 
 DELIMITER //
@@ -204,10 +206,10 @@ BEGIN
     INSERT INTO Ingreso (id_usuario, es_comercio, fecha, monto, titulo, id_categoria, descripcion)
     VALUES (usuarioID, 0, ingresoFecha, ingresoMonto, ingresoTitulo, categoriaID, ingresoDescripcion);
 END//
+-- CALL sp_InsertarIngreso(1, 1, '2023-11-05', 100.00, 'Ejemplo de ingreso', 2, 'Descripción del ingreso');
 
 DELIMITER ;
 
--- CALL sp_InsertarIngreso(1, 1, '2023-11-05', 100.00, 'Ejemplo de ingreso', 2, 'Descripción del ingreso');
 
 
 
@@ -228,10 +230,9 @@ BEGIN
     AND g.fecha BETWEEN fechaInicio AND fechaFin
     GROUP BY cg.nombre;
 END//
-
+-- CALL sp_getIngresosRecientes(1, '2023-01-01', '2023-12-31'); 
 DELIMITER ;
 
--- CALL sp_getIngresosRecientes(1, '2023-01-01', '2023-12-31'); 
 
 
 DELIMITER //
@@ -296,7 +297,7 @@ DELIMITER ;
 
 
 
--- --------------------------------------NEGOCIO-----------------------------------------------------
+#-- --------------------------------------NEGOCIO-----------------------------------------------------
 
 
 
@@ -306,10 +307,10 @@ CREATE PROCEDURE sp_getNegocio(IN usuarioID INT)
 BEGIN
     SELECT * FROM Negocio WHERE id_usuario = usuarioID;
 END;
+-- CALL sp_getNegocio(1);
 //
 DELIMITER ;
 
--- CALL sp_getNegocio(1);
 
 DELIMITER //
 CREATE PROCEDURE sp_ActualizarNegocio(
@@ -318,10 +319,11 @@ CREATE PROCEDURE sp_ActualizarNegocio(
 BEGIN
     UPDATE Negocio SET nombre = nuevoNombre WHERE id_usuario = usuarioID;
 END;
+-- CALL sp_ActualizarNegocio(1, 'Nuevo Nombre');
+
 //
 DELIMITER ;
 
--- CALL sp_ActualizarNegocio(1, 'Nuevo Nombre');
 
 DELIMITER //
 CREATE PROCEDURE sp_CrearImpuesto(
@@ -332,9 +334,9 @@ BEGIN
     INSERT INTO Impuesto (id_negocio, nombre, tasa) 
     VALUES (negocioID, nombreImpuesto, tasaImpuesto);
 END;
+-- CALL sp_CrearImpuesto(1, 'Impuesto 1', 10.50); 
 //
 DELIMITER ;
--- CALL sp_CrearImpuesto(1, 'Impuesto 1', 10.50); 
 
 
 DELIMITER //
@@ -342,9 +344,9 @@ CREATE PROCEDURE sp_getImpuestos(IN negocioID INT)
 BEGIN
     SELECT * FROM Impuesto WHERE id_negocio = negocioID;
 END;
+-- CALL sp_getImpuestos(1); 
 //
 DELIMITER ;
--- CALL sp_getImpuestos(1); 
 
 
 DELIMITER //
@@ -357,9 +359,9 @@ BEGIN
     SET nombre = nuevoNombre, tasa = nuevaTasa 
     WHERE id = impuestoID;
 END;
+-- CALL sp_ActualizarImpuesto(1, 'Nuevo Nombre', 15.75); 
 //
 DELIMITER ;
--- CALL sp_ActualizarImpuesto(1, 'Nuevo Nombre', 15.75); 
 
 
 DELIMITER //
@@ -367,10 +369,10 @@ CREATE PROCEDURE sp_EliminarImpuesto(IN impuestoID INT)
 BEGIN
     DELETE FROM Impuesto WHERE id = impuestoID;
 END;
+-- CALL sp_EliminarImpuesto(1); 
 //
 DELIMITER ;
 
--- CALL sp_EliminarImpuesto(1); 
 DELIMITER //
 CREATE PROCEDURE sp_CrearCategoriaIngresoNegocio(
     IN usuarioID INT,
@@ -430,7 +432,7 @@ END//
 DELIMITER ;
 
 
-
+DELIMITER //
 CREATE PROCEDURE sp_CrearCategoriaGastoNegocio(
     IN usuarioID INT,
     IN categoriaNombre VARCHAR(255)
@@ -546,10 +548,10 @@ BEGIN
 
 
 END//
+-- CALL sp_getBalanceImpuestos(1, '2023-01-01', '2023-12-31'); 
 
 DELIMITER ;
 
--- CALL sp_getBalanceImpuestos(1, '2023-01-01', '2023-12-31'); 
 
 DELIMITER //
 CREATE PROCEDURE sp_getGastos(IN usuarioID INT)
@@ -571,12 +573,11 @@ DELIMITER ;
 
 
 
--- --------------------------------------REPORTES-----------------------------------------------------
+#-- --------------------------------------REPORTES-----------------------------------------------------
 
 
 
 DELIMITER //
-DROP PROCEDURE IF EXISTS sp_primerReporteIngresos;
 CREATE PROCEDURE sp_primerReporteIngresos(
     IN idUsuario INT,
     IN es_negocio INT,
@@ -621,10 +622,10 @@ BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS TempResultados;
 END //
+-- CALL sp_primerReporteIngresos(1,0, '2023-01-02','2023-11-05');
 
 DELIMITER ;
 
--- CALL sp_primerReporteIngresos(1,0, '2023-01-02','2023-11-05');
 
 
 DELIMITER //
@@ -669,15 +670,15 @@ BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS TempResultados;
 END //
+-- CALL sp_segundoReporteIngresos(1,0, '2023-11-25');
 
 DELIMITER ;
 
--- CALL sp_segundoReporteIngresos(1,0, '2023-11-25');
 
 
 
 DELIMITER //
-DROP PROCEDURE IF EXISTS sp_primerReporteGastos;
+
 CREATE PROCEDURE sp_primerReporteGastos(
     IN idUsuario INT,
     IN es_negocio INT,
@@ -722,10 +723,10 @@ BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS TempResultados;
 END //
+-- CALL sp_primerReporteGastos(1,0, '2023-01-02','2023-11-05');
 
 DELIMITER ;
 
--- CALL sp_primerReporteGastos(1,0, '2023-01-02','2023-11-05');
 
 
 DELIMITER //
@@ -770,7 +771,7 @@ BEGIN
 
     DROP TEMPORARY TABLE IF EXISTS TempResultados;
 END //
-
+-- CALL sp_segundoReporteGastos(1,0, '2023-11-25');
 DELIMITER ;
 
--- CALL sp_segundoReporteGastos(1,0, '2023-11-25');
+
