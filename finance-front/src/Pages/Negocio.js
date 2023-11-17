@@ -114,6 +114,7 @@ function Gastos() {
 
   const handleDate1 = date => {
     setDate1(date);
+    setDataPie();
   };
 
   const handleDate2 = date => {

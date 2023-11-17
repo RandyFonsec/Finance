@@ -64,7 +64,7 @@ function GestionarImpuestos({categories, addFunction, updateFunction, deleteFunc
             </Form.Group>
 
             <Button 
-            onClick = {() => {addFunction(name)}}
+            onClick = {() => {addFunction(name,tasa/100)}}
             variant="primary">+</Button>
            
 
@@ -134,7 +134,7 @@ function GestionarImpuestos({categories, addFunction, updateFunction, deleteFunc
             </Form.Group>
 
             <Button 
-            onClick = {() => {updateFunction({id,nombre});setTasa(-1);setNameEdit("");setIdEdit(-1);handleClose()}}
+            onClick = {() => {updateFunction(id,nombre,tasa/100);setTasa(-1);setNameEdit("");setIdEdit(-1);handleClose()}}
             variant="primary">Guardar</Button>
            
 

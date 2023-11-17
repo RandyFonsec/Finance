@@ -37,11 +37,25 @@ function NegocioConfig({negocio}) {
 
   const [catIngresos, setCatIngresos] = useState([]);
   const [catGastos, setCatGastos] = useState([]);
+  const [impuestos, setimpuestos] = useState([]);
   
   useEffect(() => {
     cargarCategoriasIngresos();
     cargarCategoriasGastos();
+    cargarImpuestos();
   }, []);
+
+  const cargarImpuestos = async () => {
+    try {
+      const response = await controlador.getImpuestos(negocio.id);
+   
+      if (response.length !== 0) {
+        setimpuestos(response);
+      } else alert("ERROR al obtener datos");
+    } catch (error) {
+      console.error('Error en la función cargarCategoriasIngresos:', error);
+    }
+  };
 
   const cargarCategoriasIngresos = async () => {
     try {
@@ -154,6 +168,42 @@ function NegocioConfig({negocio}) {
     }
   }
 
+  const handleAddImpuesto = async(nombre,tasa) => {
+    try {
+      const response = await controlador.registrarImpuesto(nombre,negocio.id,tasa);
+   
+      if (response.status == 200) {
+        showAlert("Éxito","Impuesto agregado exitosamente");
+      } else alert("ERROR al obtener datos");
+    } catch (error) {
+      console.error('Error en la función handleAddImpuesto:', error);
+    }
+  }
+
+  const handleUpdateImpuesto = async(id,nombre,tasa) => {
+    try {
+      const response = await controlador.actualizarImpuesto(JSON.stringify({id,nombre,tasa}));
+   
+      if (response.status == 200) {
+        showAlert("Éxito","Impuesto actualizado exitosamente");
+      } else alert("ERROR al obtener datos");
+    } catch (error) {
+      console.error('Error en la función handleUpdateImpuesto:', error);
+    }
+  }
+
+  const handleDeleteImpuesto = async(id) => {
+    try {
+      const response = await controlador.eliminarImpuestos(id);
+   
+      if (response.status == 200) {
+        showAlert("Éxito","Impuesto eliminado exitosamente");
+      } else alert("ERROR al obtener datos");
+    } catch (error) {
+      console.error('Error en la función handleDeleteImpuesto:', error);
+    }
+  }
+
   return (
     <>
       <Container fluid>
@@ -218,10 +268,10 @@ function NegocioConfig({negocio}) {
       <hr className="bg-danger border-2 border-top border-dark mb-5" />
 
       <GestionarImpuestos 
-      categories = {catGastos} 
-      addFunction = {handleAddCatGasto}
-      deleteFunction = {handleDeleteCatGasto}
-      updateFunction = {handleUpdateCatGasto}
+      categories = {impuestos} 
+      addFunction = {handleAddImpuesto}
+      deleteFunction = {handleDeleteImpuesto}
+      updateFunction = {handleUpdateImpuesto}
       />
 
       </CustomCard>

@@ -396,8 +396,7 @@ registrarImpuesto: async (nombre,id_negocio,tasa) => {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-          },
-          body: id,
+          }
         });
         if(response)
           return response;
